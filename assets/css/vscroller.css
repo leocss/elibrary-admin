@@ -1,0 +1,9 @@
+.scrollContent li{
+    list-style: none;
+    border-bottom: 1px solid #EEE;
+    padding: 8px;
+}
+.scrollContent{
+    overflow: auto;
+    max-height: 520px;
+}

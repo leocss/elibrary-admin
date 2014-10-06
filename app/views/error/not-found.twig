@@ -1,0 +1,15 @@
+{% extends 'layout-error.twig' %}
+
+{% block title %}
+    404 - Not Found | {{ parent() }}
+{% endblock %}
+
+{% block error_content %}
+    <h3>
+        Page Not Found <br/>
+    </h3>
+
+    <p>
+        The page you are trying to view does not exists or is currently being worked on.
+    </p>
+{% endblock %}

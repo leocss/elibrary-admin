@@ -1,0 +1,14 @@
+@import "modules/authentication";
+
+.login-form{
+  margin-top: 20px;
+  margin: 0 auto;
+  width: $loginbox_width;
+}
+
+.login-form-title{
+  h2{
+    font-size: 40px;
+  }
+  margin: 10px 0px 50px 120px;
+}

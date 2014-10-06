@@ -1,0 +1,10 @@
+{% extends 'layout-application.twig' %}
+
+{% block title %}
+    Dashboard | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <a href="{{ app['url_generator'].generate('user.upload') }}"><button class="btn btn-block">Upload</button></a><br />
+    <a href="{{ app['url_generator'].generate('user.register') }}"><button class="btn btn-block">Register Student</button></a>
+{% endblock %}

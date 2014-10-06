@@ -1,0 +1,14 @@
+[
+    {
+        "id": 2,
+        "author": "GrumpyJavascriptCoder",
+        "title": "Javascript for dummies",
+        "cover_photo": "http://elibrary.app/assets/images/sample-book-cover.png",
+        "has_hard_copy": 0,
+        "has_soft_copy": 1,
+        "category": {
+            "id": 1,
+            "name": "Web Programming"
+        }
+    }
+]

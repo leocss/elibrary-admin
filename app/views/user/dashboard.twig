@@ -1,0 +1,24 @@
+{% extends 'layout-application.twig' %}
+
+{% block title %}
+    Dashboard | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div id="user-dashboard">
+        <div class="page-header">
+            <h2>Student Dashboard</h2>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                    <div class="title">News and Article</div>
+                    <div class="scrollContent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

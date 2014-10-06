@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+{{ app.base_url }}
+<head>
+    <title>{% block title %}Elibrary{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="{{ app.base_url }}assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ app.base_url }}assets/css/dashboard.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ app.base_url }}assets/css/authentication.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ app.base_url }}assets/css/vscroll/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ app.base_url }}assets/css/vscroller.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<div id="wrapper">
+    {% block before_header %}{% endblock %}
+    <div id="header" class="navbar navbar-default navbar-fixed-top">
+        <a href="{{ app.url_generator.generate('user.dashboard') }}" id="logo">
+            <h2>EA</h2>
+        </a>
+        <a href="{{ app.url_generator.generate('user.logout') }}" class="logout">
+            <h5 class="login-btn">logout</h5>
+        </a>
+    </div>
+    {% block after_header %}{% endblock %}
+
+    {% block before_content %}{% endblock %}
+    <div id="main">
+        {% block content %} {% endblock %}
+    </div>
+    {% block after_content %}{% endblock %}
+</div>
+
+<script type="text/javascript" src="{{ app.base_url }}assets/js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/vscroller.js"></script>
+</body>
+</html>

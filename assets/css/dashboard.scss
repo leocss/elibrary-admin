@@ -1,0 +1,87 @@
+@import "modules/mixins";
+@import "modules/fonts";
+@import "modules/layout";
+@import "modules/books";
+@import "modules/page_print_job";
+@import "modules/page_errors";
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @include font-family("RobotoLight");
+}
+
+#wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.title{
+  background-color: #333;
+  font-weight: bold;
+  color: #fff;
+  padding: 7px;
+  margin-bottom: 10px;
+}
+#header {
+  height: $header_height;
+  border-radius: 0;
+  border: 0;
+  background-color: $header_bg_color;
+
+  &.navbar {
+    margin-bottom: 0;
+    min-height: $header_height;
+  }
+
+  #logo {
+    display: block;
+    width: $sidebar_width;
+    height: $header_height;
+    background-color: $sidebar_logo_bg_color;
+    text-align: center;
+    text-decoration: none;
+    @include font-family("RobotoBold");
+
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 28px;
+      color: $sidebar_logo_color;
+      line-height: $header_height;
+    }
+  }
+}
+
+.box {
+  margin: 0px auto 15px;
+  position: relative;
+  border: 1px solid #EFEFEF;
+}
+
+.box-white {
+  background: #FFFFFF;
+}
+
+#printjob-index {
+
+}
+
+#printjob-create {
+
+}
+
+.logout{
+  float: right;
+  background-color: #000;
+  color: #EEE;
+  padding: 6px;
+  width: 5%;
+  margin-top: -48px;
+  text-align: center;
+}

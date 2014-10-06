@@ -1,0 +1,16 @@
+{% extends 'layout-error.twig' %}
+
+{% block title %}
+    500 - Server Error | {{ parent() }}
+{% endblock %}
+
+{% block error_content %}
+    <h3>
+        Our server encountered an unexpected error. <br/>
+        Sorry for any inconveniences
+    </h3>
+
+    <p>
+        <b>Error Message: </b>{{ exception.getMessage() }}
+    </p>
+{% endblock %}

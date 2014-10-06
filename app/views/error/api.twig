@@ -1,0 +1,16 @@
+{% extends 'layout-error.twig' %}
+
+{% block title %}
+    500 - Server Error | {{ parent() }}
+{% endblock %}
+
+{% block error_content %}
+    <h3>
+        Error communicating with our API server. <br/>
+        Please, try again.
+    </h3>
+
+    <p>
+        {{ exception.getMessage() }}
+    </p>
+{% endblock %}
