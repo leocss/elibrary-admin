@@ -21,10 +21,10 @@ class AdminService
         }
     }
 
-    public function getBookCategory()
+    public function addBook($input)
     {
-        //api to get all books
-    }
+        var_dump($input);
+;    }
 }
 
  

@@ -133,7 +133,7 @@
 }
 
 .with-sidebar #main {
-    padding-left: 20%;
+    padding-left: 150px;
 }
 
 @media (max-width: 360px) {
@@ -144,13 +144,12 @@
 
 #sidebar {
     height: 100%;
-    width: 15%;
+    width: 150px;
     position: fixed;
     top: 0;
     bottom: 0;
     overflow-y: hidden;
-    background-color: #CCC;
-    padding-top: 50px;
+    background-color: #434343;
 }
 
 @media (max-width: 360px) {
