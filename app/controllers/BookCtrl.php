@@ -14,7 +14,7 @@ class BookCtrl extends BaseCtrl
     public function upload()
     {
         $categories = $this->client->getCategories();
-        var_dump($categories);exit;
+        
         return $this->view->render('book/upload.twig',
             [
                 'categories' => $categories

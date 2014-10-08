@@ -13,8 +13,8 @@ $app = new Silex\Application();
  * Define App Config
  */
 $app['debug'] = true;
-$app['app.lib.api.elibrary_client_id'] = 'testsecret';
-$app['app.lib.api.elibrary_client_secret'] = 'testclient';
+$app['app.lib.api.elibrary_client_id'] = '9d81c76533b0407d7c52e0ebd5ba2dcf';
+$app['app.lib.api.elibrary_client_secret'] = 'ebe661a508c4fc56a69643cb8087b005';
 
 /**
  * Register Services
@@ -134,7 +134,7 @@ $app['app.controllers.Admin'] = $app->share(
     }
 );
 
-$app['app.controllers.Admin'] = $app->share(
+$app['app.controllers.Book'] = $app->share(
     function () use ($app) {
         return new Controllers\BookCtrl($app['app.GlobalCtrlDependencies']);
     }
