@@ -13,8 +13,8 @@ $app = new Silex\Application();
  * Define App Config
  */
 $app['debug'] = true;
-$app['app.lib.api.elibrary_client_id'] = '9d81c76533b0407d7c52e0ebd5ba2dcf';
-$app['app.lib.api.elibrary_client_secret'] = 'ebe661a508c4fc56a69643cb8087b005';
+$app['app.lib.api.elibrary_client_id'] = 'testsecret';
+$app['app.lib.api.elibrary_client_secret'] = 'testclient';
 
 /**
  * Register Services
@@ -35,7 +35,22 @@ $app->register(
  */
 
 // When an Api error occurs
+$app->error(
+    function (ApiException $exception) use ($app) {
+        if ($exception->getErrorCode() == 'invalid_token') {
+            // If the api erro is an 'invalid_token' response, then the user
+            // needs to be logged out so we can generate another valid token.
+            //return $app->redirect($app['url_generator']->generate('backend.main'));
+        }
 
+        return $app['twig']->render(
+            'error/api.twig',
+            [
+                'exception' => $exception
+            ]
+        );
+    }
+);
 
 // When a route does not exists
 $app->error(
@@ -119,12 +134,18 @@ $app['app.controllers.Admin'] = $app->share(
     }
 );
 
+$app['app.controllers.Admin'] = $app->share(
+    function () use ($app) {
+        return new Controllers\BookCtrl($app['app.GlobalCtrlDependencies']);
+    }
+);
+
 // Application Routes
 
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('user.dashboard');
 $app->match('/register', 'app.controllers.Admin:register')->method('GET|POST')->bind('user.register');
-$app->match('/books/upload', 'app.controllers.Admin:upload')->method('GET|POST')->bind('user.upload');
+$app->match('/books/upload', 'app.controllers.Book:upload')->method('GET|POST')->bind('book.upload');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 
 return $app;
