@@ -1,9 +1,19 @@
-{% extends 'layout-main.twig' %}
+{% extends 'layout-application.twig' %}
 
 {% block body_class %}with-sidebar{% endblock %}
 
-{% block before_content %}
-<div id="sidebar">
-
-</div>
+{% block sidebar_content %}
+    <div id="sidebar">
+        <h4>Book Regitration</h4>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="{{ app['url_generator'].generate('user.upload') }}">Upload Book</a></li>
+            <li><a href="{{ app['url_generator'].generate('user.register') }}">Register StudentEdit Uploaded Book</a></li>
+            <li><a href="#">Delete book</a></li>
+        </ul>
+        <h4>Student/Staff Regitration</h4>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#">Register a student</a></li>
+            <li><a href="#">Register a staff</a></li>
+        </ul>
+    </div>
 {% endblock %}
