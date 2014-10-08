@@ -4,21 +4,19 @@
 
 {% block sidebar_content %}
     <div id="sidebar">
-        <h4>Book Regitration</h4>
+        <h4>Members</h4>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="{{ app['url_generator'].generate('book.upload') }}">Upload Book</a></li>
-            <li><a href="{{ app['url_generator'].generate('user.register') }}">Register StudentEdit Uploaded Book</a></li>
-            <li><a href="#">Delete book</a></li>
+            <li><a href="#">Register Member</a></li>
         </ul>
-        <h4>Student/Staff Regitration</h4>
+        <h4>Articles</h4>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#">Register a student</a></li>
-            <li><a href="#">Register a staff</a></li>
+            <li><a href="#">Create Article</a></li>
+            <li><a href="#">Manage Articles</a></li>
         </ul>
-        <h4>News/Article</h4>
+        <h4>Books</h4>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#">Add an article</a></li>
-            <li><a href="#">Manage article</a></li>
+            <li><a href="{{ app.url_generator.generate('book.add') }}">Register Book</a></li>
+            <li><a href="{{ app.url_generator.generate('book.index') }}">Manage Books</a></li>
         </ul>
     </div>
 {% endblock %}
