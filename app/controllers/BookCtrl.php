@@ -2,7 +2,6 @@
 
 namespace Elibrary\Controllers;
 
-use Elibrary\lib\AdminService;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,11 +13,19 @@ class BookCtrl extends BaseCtrl
 
     public function upload(Request $request)
     {
-        if($input = $request->request->all()){
-            $service = new AdminService();
-            if($service->addBook($input)){
-                return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+        if($post = $request->request->all()){
+            $input = array_merge($post, $_FILES);
+
+            $file_name = $input['file']['name'];
+            $file_size = $input['file']['size'];
+            $file_tmp_name = $input['file']['tmp_name'];
+            $explode = explode('.', $file_name);
+            $ext = end($explode);;
+
+            if($this->client->addBook($input)){
+                //return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
             }
+
         }
         $categories = $this->client->getCategories();
         

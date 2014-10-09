@@ -1,6 +1,6 @@
 <?php
 
-namespace Elibrary\lib;
+namespace Elibrary\lib\Service;
 
 /**
  * @author Tosin Akomolafe <gettosin4me@gmail.com>

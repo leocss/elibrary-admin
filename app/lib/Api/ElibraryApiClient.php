@@ -84,6 +84,23 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
 
+    public function addBook($data)
+    {
+        $request = $this->buildRequest('POST', '/books');
+        $request->getBody()->setField('category_id', $data['category']);
+        $request->getBody()->setField('title', $data['title']);
+        $request->getBody()->setField('author', $data['author']);
+        $request->getBody()->setField('edition', $data['edition']);
+        $request->getBody()->setField('overview', $data['overview']);
+        $request->getBody()->setField('file_name', $data['file']['name']);
+        $request->getBody()->setField('has_soft_copy', $data['has_soft_copy']);
+        $request->getBody()->setField('has_hard_copy', $data['has_hard_copy']);
+        $request->getBody()->setField('created_at', date('Y-m-d H:i:s', time()));
+        $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
+
+        return $this->send($request);
+    }
+
     /**
      * @return array
      */
