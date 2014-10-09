@@ -12,6 +12,11 @@
     <link href="{{ app.base_url }}assets/css/vscroll/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>
     <link href="{{ app.base_url }}assets/css/vscroller.css" rel="stylesheet" type="text/css"/>
 
+    <script type="text/javascript">
+    var app = {
+        base_url: '{{ app.base_url }}'
+    };
+    </script>
 </head>
 <body class="{% block body_class %}{% endblock %}">
 
@@ -36,6 +41,8 @@
 <script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery.mCustomScrollbar.min.js"></script>
 <script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery.mousewheel.min.js"></script>
 <script type="text/javascript" src="{{ app.base_url }}assets/js/vscroll/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="{{ app.base_url }}assets/js/vscroller.js"></script>
+<script type="text/javascript" src="{{ app.base_url }}assets/js/application.js"></script>
 </body>
 </html>

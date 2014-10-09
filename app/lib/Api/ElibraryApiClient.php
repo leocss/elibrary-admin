@@ -73,6 +73,11 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
+    public function getUsers()
+    {
+        return $this->send($this->buildRequest('GET', '/users'));
+    }
+
     /**
      * @param int $id The user id.
      *  Note: Passing 'me' as the ID will return the user that was
@@ -99,6 +104,21 @@ class ElibraryApiClient extends Client
         $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
 
         return $this->send($request);
+    }
+
+    public function updateUser($id, $data)
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
+            'body' => [
+                'first_name' => 'Laju',
+                'last_name' => 'Morrison'
+            ]
+        ]));
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
     }
 
     /**
@@ -136,6 +156,7 @@ class ElibraryApiClient extends Client
     {
         return $this->prepareBook($this->send($this->buildRequest('GET', '/books/random')));
     }
+
     /**
      * @param $method
      * @param $endpoint
@@ -147,7 +168,7 @@ class ElibraryApiClient extends Client
         $request = $this->createRequest($method, $endpoint, $opts);
 
         $request->setHeader('Authorization',
-            'Bearer ' . $this->app['app.lib.api.elibrary_client_id'].':'.$this->app['app.lib.api.elibrary_client_secret']
+            'Bearer ' . $this->app['app.lib.api.elibrary_client_id'] . ':' . $this->app['app.lib.api.elibrary_client_secret']
         );
 
         // Set Content-Type header to application/json
