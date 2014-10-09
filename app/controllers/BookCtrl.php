@@ -2,7 +2,7 @@
 
 namespace Elibrary\Controllers;
 
-use Elibrary\Lib\AdminService;
+use Elibrary\lib\AdminService;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,8 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BookCtrl extends BaseCtrl
 {
-    public function upload()
+
+    public function upload(Request $request)
     {
+        if($input = $request->request->all()){
+            $service = new AdminService();
+            if($service->addBook($input)){
+                return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+            }
+        }
         $categories = $this->client->getCategories();
         
         return $this->view->render('book/upload.twig',
