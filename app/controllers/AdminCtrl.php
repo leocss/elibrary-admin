@@ -37,7 +37,12 @@ class AdminCtrl extends BaseCtrl
 
     public function upload()
     {
-        return $this->view->render('admin/upload.twig');
+        $categories = $this->client->getCategories();
+var_dump($categories);exit;
+        return $this->view->render('admin/upload.twig',
+            [
+                'categories' => $categories
+            ]);
     }
 
     public function register()
