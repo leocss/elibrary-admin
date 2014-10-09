@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BookCtrl extends BaseCtrl
 {
 
-    public function upload(Request $request)
+    public function add(Request $request)
     {
         if($post = $request->request->all()){
             $input = array_merge($post, $_FILES);
