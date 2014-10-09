@@ -144,8 +144,10 @@ $app['app.controllers.Book'] = $app->share(
 
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('user.dashboard');
-$app->match('/register', 'app.controllers.Admin:register')->method('GET|POST')->bind('user.register');
-$app->match('/books/upload', 'app.controllers.Book:upload')->method('GET|POST')->bind('book.upload');
+$app->get('/users', 'app.controllers.Admin:index')->bind('user.index');
+$app->match('/users/create', 'app.controllers.Admin:register')->method('GET|POST')->bind('user.create');
+$app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
+$app->match('/books/add', 'app.controllers.Book:upload')->method('GET|POST')->bind('book.add');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 
 return $app;
