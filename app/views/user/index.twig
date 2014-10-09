@@ -1,0 +1,33 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Manage Users | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div id="user-dashboard">
+        <div class="page-header">
+            <h2>Student Dashboard</h2>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="col-md-9">
+                    <div class="user-list">
+                    {% for user in users %}
+                        <div class="user-item">
+                            {{ user.full_name }}
+                            <div class="btn-group">
+                                <a href="{{ app.url_generator.generate('user.view', {id: user.id}) }}" class="btn btn-primary">Edit User</a>
+                                <a href="#" id="user-{{ user.id }}" class="btn btn-danger delete-user">Delete User</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

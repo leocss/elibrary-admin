@@ -140,14 +140,29 @@ $app['app.controllers.Book'] = $app->share(
     }
 );
 
-// Application Routes
+$app['app.controllers.User'] = $app->share(
+    function () use ($app) {
+        return new Controllers\UserCtrl($app['app.GlobalCtrlDependencies']);
+    }
+);
 
+$app['app.controllers.Ajax'] = $app->share(
+    function () use ($app) {
+        return new Controllers\AjaxCtrl($app['app.GlobalCtrlDependencies']);
+    }
+);
+
+// Application Routes
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('user.dashboard');
-$app->get('/users', 'app.controllers.Admin:index')->bind('user.index');
-$app->match('/users/create', 'app.controllers.Admin:register')->method('GET|POST')->bind('user.create');
+$app->get('/users', 'app.controllers.User:index')->bind('user.index');
+$app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
+$app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:upload')->method('GET|POST')->bind('book.add');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
+
+// Ajax Routes
+$app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
 
 return $app;

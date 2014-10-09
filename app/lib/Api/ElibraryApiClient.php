@@ -73,6 +73,11 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
+    public function getUsers()
+    {
+        return $this->send($this->buildRequest('GET', '/users'));
+    }
+
     /**
      * @param int $id The user id.
      *  Note: Passing 'me' as the ID will return the user that was
@@ -82,6 +87,21 @@ class ElibraryApiClient extends Client
     public function getUser($id)
     {
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
+    }
+
+    public function updateUser($id, $data)
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
+            'body' => [
+                'first_name' => 'Laju',
+                'last_name' => 'Morrison'
+            ]
+        ]));
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
     }
 
     /**
@@ -125,6 +145,7 @@ class ElibraryApiClient extends Client
     {
         return $this->prepareBook($this->send($this->buildRequest('GET', '/books/random')));
     }
+
     /**
      * @param $method
      * @param $endpoint
