@@ -24,7 +24,7 @@ class AdminCtrl extends BaseCtrl
             if (array_key_exists($post['id'], $credentials)) {
                 if ($credentials[$post['id']]['password'] == $post['password']) {
                     $_SESSION['uid'] = $credentials[$post['id']];
-                    return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+                    return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
                 }
             }
         }

@@ -23,13 +23,13 @@ class BookCtrl extends BaseCtrl
             $ext = end($explode);;
 
             if($this->client->addBook($input)){
-                //return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+                //return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
             }
 
         }
         $categories = $this->client->getCategories();
         
-        return $this->view->render('book/upload.twig',
+        return $this->view->render('book/add.twig',
             [
                 'categories' => $categories
             ]);

@@ -154,7 +154,7 @@ $app['app.controllers.Ajax'] = $app->share(
 
 // Application Routes
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
-$app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('user.dashboard');
+$app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('admin.dashboard');
 $app->get('/users', 'app.controllers.User:index')->bind('user.index');
 $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
 $app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
