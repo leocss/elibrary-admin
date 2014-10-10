@@ -1,0 +1,147 @@
+#main {
+    width: 100%;
+    padding-left: 0;
+    padding-top: 50px;
+}
+
+.with-sidebar #main {
+    padding-left: 150px;
+}
+
+@media (max-width: 360px) {
+    .with-sidebar #main {
+        padding-left: 0;
+    }
+}
+
+#sidebar {
+    height: 100%;
+    width: 150px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: hidden;
+    background-color: #434343;
+}
+
+@media (max-width: 360px) {
+    #sidebar {
+        display: none;
+    }
+}
+
+.page-header {
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.page-header h2 {
+    text-transform: uppercase;
+    font-family: "RobotoBold", Arial, san-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.centralize {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.centralize h4 {
+    font-family: "RobotoBold", Arial, san-serif;
+    font-size: 14px;
+    color: #898989;
+}
+
+.margin-top-md {
+    margin-top: 10px;
+}
+
+.margin-top-lg {
+    margin-top: 20px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: "RobotoLight", Arial, san-serif;
+}
+
+#wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+    background-color: #333;
+    font-weight: bold;
+    color: #fff;
+    padding: 7px;
+    margin-bottom: 10px;
+}
+
+#header {
+    height: 50px;
+    border-radius: 0;
+    border: 0;
+    background-color: #434343;
+}
+
+#header.navbar {
+    margin-bottom: 0;
+    min-height: 50px;
+}
+
+#header #logo {
+    display: block;
+    width: 60px;
+    height: 50px;
+    background-color: #1a1a1a;
+    text-align: center;
+    text-decoration: none;
+    font-family: "RobotoBold", Arial, san-serif;
+}
+
+#header #logo h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    color: #b3b3b3;
+    line-height: 50px;
+}
+
+.box {
+    margin: 0px auto 15px;
+    position: relative;
+    border: 1px solid #EFEFEF;
+}
+
+.box-white {
+    background: #FFFFFF;
+}
+
+.logout {
+    float: right;
+    background-color: #000;
+    color: #EEE;
+    padding: 6px;
+    width: 5%;
+    margin-top: -48px;
+    text-align: center;
+}
+
+.login-form {
+    margin-top: 20px;
+    margin: 0 auto;
+    width: 960px;
+}
+
+.login-form-title {
+    margin: 10px 0px 50px 120px;
+}
+
+.login-form-title h2 {
+    font-size: 40px;
+}
