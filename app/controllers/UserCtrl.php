@@ -23,7 +23,7 @@ class UserCtrl extends BaseCtrl
 
                 return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
             } catch (ApiException $e) {
-                $params['errors'] = $e->getMessage();
+                $params['errors'][] = $e->getMessage();
             }
         }
 
