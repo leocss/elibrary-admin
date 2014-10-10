@@ -11,16 +11,19 @@
 
     <div class="container-fluid">
         <div class="col-md-9">
+            {% include 'partials/errors.twig' %}
             <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Borrowed copy count</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="borrow_copy">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="user[first_name]" placeholder="First Name">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="user[last_name]" placeholder="Last Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Add book</button>
+                        <button type="submit" class="btn btn-default">Create User</button>
                     </div>
                 </div>
             </form>
