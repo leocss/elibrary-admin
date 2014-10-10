@@ -2,7 +2,7 @@
 
 namespace Elibrary\Controllers;
 
-use Elibrary\Lib\AdminService;
+use Elibrary\lib\Service\AdminService;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,9 +18,14 @@ class AdminCtrl extends BaseCtrl
     public function main(Request $request)
     {
         if ($post = $request->request->all()) {
-            $service = new AdminService();
-            if ($service->login($post['id'], $post['password'])) {
-                return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+
+            $credentials = json_decode(file_get_contents(__DIR__ . '/../storage/data/users.json'), true);
+
+            if (array_key_exists($post['id'], $credentials)) {
+                if ($credentials[$post['id']]['password'] == $post['password']) {
+                    $_SESSION['uid'] = $credentials[$post['id']];
+                    return $this->app->redirect($this->app['url_generator']->generate('user.dashboard'));
+                }
             }
         }
 
@@ -33,16 +38,6 @@ class AdminCtrl extends BaseCtrl
     public function dashboard()
     {
         return $this->view->render('admin/dashboard.twig');
-    }
-
-    public function upload()
-    {
-        $categories = $this->client->getCategories();
-var_dump($categories);exit;
-        return $this->view->render('admin/upload.twig',
-            [
-                'categories' => $categories
-            ]);
     }
 
     public function register()

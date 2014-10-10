@@ -159,7 +159,7 @@ $app->get('/users', 'app.controllers.User:index')->bind('user.index');
 $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
 $app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
-$app->match('/books/add', 'app.controllers.Book:upload')->method('GET|POST')->bind('book.add');
+$app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 
 // Ajax Routes
