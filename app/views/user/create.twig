@@ -8,10 +8,12 @@
     <div class="page-header">
         <h2>Create User</h2>
     </div>
-
+{{ errors }}
     <div class="container-fluid">
         <div class="col-md-9">
+
             {% include 'partials/errors.twig' %}
+
             <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="col-sm-6">
