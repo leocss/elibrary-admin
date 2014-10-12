@@ -1,33 +1,7 @@
-#main {
-    width: 100%;
-    padding-left: 0;
-    padding-top: 50px;
-}
-
-.with-sidebar #main {
-    padding-left: 150px;
-}
-
-@media (max-width: 360px) {
-    .with-sidebar #main {
-        padding-left: 0;
-    }
-}
-
-#sidebar {
-    height: 100%;
-    width: 150px;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    overflow-y: hidden;
-    background-color: #434343;
-}
-
-@media (max-width: 360px) {
-    #sidebar {
-        display: none;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    background: #F1f1f1;
 }
 
 .page-header {
@@ -72,10 +46,6 @@ body, html {
 #wrapper {
     height: 100%;
     width: 100%;
-}
-
-.main-content {
-    margin-top: 20px;
 }
 
 .title {
@@ -136,16 +106,101 @@ body, html {
     text-align: center;
 }
 
-.login-form {
+/**
+ * Content Style
+ */
+
+.main-content {
     margin-top: 20px;
-    margin: 0 auto;
-    width: 960px;
 }
 
-.login-form-title {
-    margin: 10px 0px 50px 120px;
+#main {
+    width: 100%;
+    padding-left: 0;
+    padding-top: 50px;
 }
 
-.login-form-title h2 {
-    font-size: 40px;
+.with-sidebar #main {
+    padding-left: 260px;
+}
+
+@media (max-width: 360px) {
+    .with-sidebar #main {
+        padding-left: 0;
+    }
+}
+
+/**
+ * Sidebar Style
+ */
+
+#sidebar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 260px;
+    bottom: 0px;
+    z-index: 1000;
+    display: block;
+    padding: 70px 20px 20px;
+    background-color: #FBFBFB;
+    border-right: 1px solid #EEE;
+}
+
+@media (max-width: 360px) {
+    #sidebar {
+        display: none;
+    }
+}
+
+/**
+ * Extra Styles
+ */
+.box {
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    transition: padding 500ms ease 0s;
+}
+
+.box .box-header {
+    background: transparent;
+    margin: -20px -20px 10px;
+    padding: 4px 18px;
+    border-bottom: 1px solid #DADADA;
+    padding: 10px;
+}
+
+.box .box-header h3 {
+    margin: 0px;
+    padding: 0px;
+    font-weight: 200;
+    margin-top: 3px;
+    font-size: 18px;
+}
+
+.box .box-body {
+
+}
+
+.box .box-body h4 {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px 0px;
+    margin-bottom: 30px;
+    padding: 10px 0px;
+    line-height: 22px;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.box-footer {
+    background: #FCFCFC;
+    border-top: 1px solid #DDD;
+    margin: 50px -20px -20px;
+    padding: 14px 18px;
+    clear: both;
+}
+
+.box.box-default {
+    background: #FBFBFB;
 }
