@@ -73,10 +73,17 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
-    public function addUser($data)
+    public function createUser($data)
     {
-
-        return $this->send($this->buildRequest('GET', '/users'));
+        return $this->send(
+            $this->buildRequest(
+                'POST',
+                '/users',
+                [
+                    'body' => $data
+                ]
+            )
+        );
     }
 
     public function getUsers()
@@ -97,12 +104,18 @@ class ElibraryApiClient extends Client
 
     public function updateUser($id, $data)
     {
-        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
-            'body' => [
-                'first_name' => 'Laju',
-                'last_name' => 'Morrison'
-            ]
-        ]));
+        return $this->send(
+            $this->buildRequest(
+                'POST',
+                sprintf('/users/%s', $id),
+                [
+                    'body' => [
+                        'first_name' => 'Laju',
+                        'last_name' => 'Morrison'
+                    ]
+                ]
+            )
+        );
     }
 
     public function deleteUser($id)
@@ -183,7 +196,8 @@ class ElibraryApiClient extends Client
     {
         $request = $this->createRequest($method, $endpoint, $opts);
 
-        $request->setHeader('Authorization',
+        $request->setHeader(
+            'Authorization',
             'Bearer ' . $this->app['app.lib.api.elibrary_client_id'] . ':' . $this->app['app.lib.api.elibrary_client_secret']
         );
 

@@ -19,6 +19,11 @@
       }
     });
 
+    $('#btn-generate-password').on('click', function() {
+      // TODO: Generate random value.
+      $('#input-user-password').val('123456');
+    });
+
     // Manage users page
     $('.delete-user').on('click', function (e) {
       var $this = $(this);

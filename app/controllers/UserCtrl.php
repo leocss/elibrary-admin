@@ -19,7 +19,7 @@ class UserCtrl extends BaseCtrl
             $data = $request->request->get('user');
 
             try {
-                $response = $this->client->addUser($data);
+                $response = $this->client->createUser($data);
 
                 return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
             } catch (ApiException $e) {
