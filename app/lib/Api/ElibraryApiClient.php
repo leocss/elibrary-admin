@@ -110,6 +110,16 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
     }
 
+    public function getPosts($params = array())
+    {
+        return $this->send($this->buildRequest('GET', '/posts'));
+    }
+
+    public function getPost($id)
+    {
+        return $this->send($this->buildRequest('GET', sprintf('/posts/%s', $id)));
+    }
+
     /**
      * @return array
      */
