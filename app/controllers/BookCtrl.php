@@ -16,14 +16,16 @@ class BookCtrl extends BaseCtrl
         if($post = $request->request->all()){
             $input = array_merge($post, $_FILES);
 
-            $file_name = $input['file']['name'];
-            $file_size = $input['file']['size'];
-            $file_tmp_name = $input['file']['tmp_name'];
+            $file_name = $input['image']['name'];
+            $file_size = $input['image']['size'];
+            $file_tmp_name = $input['image']['tmp_name'];
             $explode = explode('.', $file_name);
             $ext = end($explode);;
 
-            if($this->client->addBook($input)){
-                //return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+            if($res = $this->client->addBook($input, $request->files->get('image'))){
+                if($this->client->uploadPreviewImage($res['id'], $request->files->get('image'))){
+                    //return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+                }
             }
 
         }
