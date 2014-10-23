@@ -1,4 +1,4 @@
-{% extends 'layout-application.twig' %}
+{% extends 'layout-main.twig' %}
 
 {% block body_class %}with-sidebar{% endblock %}
 
@@ -11,8 +11,8 @@
         </ul>
         <h4>Articles</h4>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#">Create Article</a></li>
-            <li><a href="#">Manage Articles</a></li>
+            <li><a href="{{ app.url_generator.generate('article.create') }}">Create Article</a></li>
+            <li><a href="{{ app.url_generator.generate('article.index') }}">Manage Articles</a></li>
         </ul>
         <h4>Books</h4>
         <ul class="nav nav-pills nav-stacked">

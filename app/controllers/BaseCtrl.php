@@ -11,7 +11,6 @@ use Twig_Environment;
  */
 class BaseCtrl
 {
-
     /**
      * @var Application
      */
@@ -31,6 +30,11 @@ class BaseCtrl
      * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
     protected $alerts;
+
+    /**
+     * @var \Elibrary\Lib\Api\ElibraryApiClient
+     */
+    protected $client;
 
     public function __construct($controllerDependencies)
     {

@@ -12,6 +12,7 @@
 
         <div class="login-form">
             <div class="login-form-title"><h2>Admin Login Panel.</h2></div>
+
             <form action="{{ app.url_generator.generate('backend.main') }}" method="post" class="form-horizontal"
                   role="form">
                 <div class="form-group">
@@ -19,7 +20,7 @@
 
                     <div class="col-md-5">
                         <input type="text" name="id" class="form-control" id="inputEmail"
-                               placeholder="Staff ID or Matric Number">
+                               placeholder="Admin Username">
                     </div>
                 </div>
                 <div class="form-group">

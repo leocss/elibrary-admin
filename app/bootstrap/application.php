@@ -146,6 +146,12 @@ $app['app.controllers.User'] = $app->share(
     }
 );
 
+$app['app.controllers.Article'] = $app->share(
+    function () use ($app) {
+        return new Controllers\ArticleCtrl($app['app.GlobalCtrlDependencies']);
+    }
+);
+
 $app['app.controllers.Ajax'] = $app->share(
     function () use ($app) {
         return new Controllers\AjaxCtrl($app['app.GlobalCtrlDependencies']);
@@ -160,6 +166,8 @@ $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')-
 $app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
+$app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
+$app->get('/articles/create', 'app.controllers.Article:create')->bind('article.create');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 
 // Ajax Routes

@@ -73,6 +73,19 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
+    public function createUser($data)
+    {
+        return $this->send(
+            $this->buildRequest(
+                'POST',
+                '/users',
+                [
+                    'body' => $data
+                ]
+            )
+        );
+    }
+
     public function getUsers()
     {
         return $this->send($this->buildRequest('GET', '/users'));
@@ -113,23 +126,36 @@ class ElibraryApiClient extends Client
         print_r($file->getRealPath());exit;
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
-
-        return $this->send($request);
     }
-
     public function updateUser($id, $data)
     {
-        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
-            'body' => [
-                'first_name' => 'Laju',
-                'last_name' => 'Morrison'
-            ]
-        ]));
+        return $this->send(
+            $this->buildRequest(
+                'POST',
+                sprintf('/users/%s', $id),
+                [
+                    'body' => [
+                        'first_name' => 'Laju',
+                        'last_name' => 'Morrison'
+                    ]
+                ]
+            )
+        );
     }
 
     public function deleteUser($id)
     {
         return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
+    }
+
+    public function getPosts($params = array())
+    {
+        return $this->send($this->buildRequest('GET', '/posts'));
+    }
+
+    public function getPost($id)
+    {
+        return $this->send($this->buildRequest('GET', sprintf('/posts/%s', $id)));
     }
 
     /**
@@ -160,6 +186,23 @@ class ElibraryApiClient extends Client
         return $this->prepareBook($this->send($this->buildRequest('GET', sprintf('/books/%d', $bookId))));
     }
 
+    public function addBook($data)
+    {
+        $request = $this->buildRequest('POST', '/books');
+        $request->getBody()->setField('category_id', $data['category']);
+        $request->getBody()->setField('title', $data['title']);
+        $request->getBody()->setField('author', $data['author']);
+        $request->getBody()->setField('edition', $data['edition']);
+        $request->getBody()->setField('overview', $data['overview']);
+        $request->getBody()->setField('file_name', $data['file']['name']);
+        $request->getBody()->setField('has_soft_copy', $data['has_soft_copy']);
+        $request->getBody()->setField('has_hard_copy', $data['has_hard_copy']);
+        $request->getBody()->setField('created_at', date('Y-m-d H:i:s', time()));
+        $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
+
+        return $this->send($request);
+    }
+
     /**
      * @return ResponseInterface
      */
@@ -178,7 +221,8 @@ class ElibraryApiClient extends Client
     {
         $request = $this->createRequest($method, $endpoint, $opts);
 
-        $request->setHeader('Authorization',
+        $request->setHeader(
+            'Authorization',
             'Bearer ' . $this->app['app.lib.api.elibrary_client_id'] . ':' . $this->app['app.lib.api.elibrary_client_secret']
         );
 
