@@ -1,0 +1,65 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Manage Articles | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>Manage Articles</h2>
+    </div>
+    <div class="container-fluid">
+        <div class="row main-content">
+            <div class="col-md-12">
+                {% include 'partials/errors.twig' with errors %}
+
+                <table class="table table-striped table-bordered media-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 10%">Image</th>
+                        <th style="width: 60%">Title / Description</th>
+                        <th style="width: 20%">Date</th>
+                        <th style="width: 10%" class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for article in articles %}
+                        <tr class="article-item">
+                            <td>
+                                <div class="thumbnail">
+                                    <div class="thumbnail-view">
+                                        <a href="images/gallery/img1-lg.jpg"
+                                           class="thumbnail-view-hover image-zoom"></a>
+                                        <img alt="Featured Image" src="images/gallery/img1-sm.jpg" width="125">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="javascript:;"><strong>{{ article.title }}</strong></a>
+
+                                <p>{{ article.content }}</p>
+                            </td>
+                            <td>
+                                <strong>Created At</strong> <br/>
+                                {{ article.created_at }} <br/><br/>
+                                <strong>Updated At</strong> <br/>
+                                {{ article.updated_at }}<br/>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></button>
+                                &nbsp;
+                                <button id="delete-article-{{ article.id }}"
+                                        class="btn btn-xs btn-danger delete-article">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

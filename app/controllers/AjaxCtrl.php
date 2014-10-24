@@ -14,11 +14,20 @@ class AjaxCtrl extends BaseCtrl
     public function deleteUser($id)
     {
         $response = $this->client->deleteUser($id);
-
         if (isset($response['error'])) {
-          return json_encode(['error_message' => $response['error']['message']]);
+            return json_encode(['error_message' => $response['error']['message']]);
         }
-        
+
+        return json_encode(['id' => $id, 'success' => true]);
+    }
+
+    public function deleteArticle($id)
+    {
+        $response = $this->client->deletePost($id);
+        if (isset($response['error'])) {
+            return json_encode(['error_message' => $response['error']['message']]);
+        }
+
         return json_encode(['id' => $id, 'success' => true]);
     }
 }

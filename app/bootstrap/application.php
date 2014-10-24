@@ -102,6 +102,7 @@ $app['app.GlobalCtrlDependencies'] = $app->share(
 $app->before(
     function (Request $request) use ($app) {
         $app['base_url'] = $request->getUriForPath('/');
+        $app['time'] = time();
 
         $elibraryClient = $app['app.lib.ElibraryApiClient'];
         // Ensure that the user is logged in...
@@ -110,6 +111,10 @@ $app->before(
                 return $app->redirect($app['url_generator']->generate('backend.main'));
             }*/
         }
+
+        $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
     },
     Silex\Application::LATE_EVENT
 );
@@ -161,9 +166,11 @@ $app['app.controllers.Ajax'] = $app->share(
 // Application Routes
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('admin.dashboard');
+
 $app->get('/users', 'app.controllers.User:index')->bind('user.index');
 $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
-$app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
+$app->match('/users/{id}', 'app.controllers.User:edit')->method('GET|POST')->bind('user.edit');
+
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
@@ -172,5 +179,6 @@ $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
+$app->delete('/ajax/articles/{id}', 'app.controllers.Ajax:deleteArticle');
 
 return $app;

@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserCtrl extends BaseCtrl
 {
+    /**
+     * Creates a new user
+     *
+     * @param Request $request
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function create(Request $request)
     {
         $params = [];
@@ -30,6 +36,11 @@ class UserCtrl extends BaseCtrl
         return $this->view->render('user/create.twig', $params);
     }
 
+    /**
+     * List / Manage users
+     *
+     * @return string
+     */
     public function index()
     {
         $users = $this->client->getUsers();
@@ -42,7 +53,13 @@ class UserCtrl extends BaseCtrl
         );
     }
 
-    public function view($id)
+    /**
+     * View / Edit a user
+     *
+     * @param $id User ID
+     * @return string
+     */
+    public function edit($id)
     {
         $user = $this->client->getUser($id);
 

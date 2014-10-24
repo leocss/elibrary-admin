@@ -5,42 +5,65 @@
 {% endblock %}
 
 {% block content %}
-    <div id="user-dashboard">
+    <div id="user-index">
         <div class="page-header">
             <h2>Manage Library Users</h2>
         </div>
         <div class="container-fluid">
             <div class="row main-content">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="user-list">
-                        {% for user in users %}
-                            <div class="box box-default media user-item">
-                                <a class="pull-left padding-md text-center text-white" href="#">
-                                    <span class="fa fa-user fa-5x"></span>
-                                </a>
-
-                                <div class="media-body padding-md">
-                                    <h4 class="media-heading">
-                                        <a href="#" class="text-inverse">
-                                            {{ user.full_name }}
+                        <div class="row">
+                            {% for user in users %}
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="user-item clearfix">
+                                        <img src="{{ user.image_url | default(app.default_user_image) }}"
+                                             alt="User Image"
+                                             class="img-circle pull-left">
+                                        <h4 class="user-content text-right">
+                                            <a class="text-inverse"
+                                               href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}">
+                                                <strong>{{ user.full_name }}</strong>
+                                            </a> <br>
+                                    <span class="btn-group action-btns">
+                                        <a href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}"
+                                           class="btn btn-default" title="">
+                                            Edit
                                         </a>
-                                    </h4>
-
-                                    <div class="btn-group">
-                                        <a href="{{ app.url_generator.generate('user.view', {id: user.id}) }}"
-                                           class="btn btn-primary">Edit User</a>
-                                        <a href="#" id="user-{{ user.id }}" class="btn btn-danger delete-user">Delete
-                                            User</a>
+                                        <a href="javascript:void(0)" id="user-{{ user.id }}"
+                                           class="btn btn-danger delete-user">
+                                            <span class="fa fa-times"></span>
+                                        </a>
+                                    </span>
+                                        </h4>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+            </div>
 
+            {#
+            <div class="box box-default media user-item">
+                <a class="pull-left padding-md text-center text-white" href="#">
+
+                </a>
+
+                    <div class="btn-group">
+                        <a href="{{ app.url_generator.generate('user.view', {id: user.id}) }}"
+                           class="btn btn-primary">Edit User</a>
+
+                    </div>
                 </div>
             </div>
+            #}
         </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+    </div>
+    </div>
     </div>
 {% endblock %}
