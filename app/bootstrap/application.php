@@ -165,17 +165,22 @@ $app['app.controllers.Ajax'] = $app->share(
 
 // Application Routes
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
+$app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('admin.dashboard');
 
+// Users
 $app->get('/users', 'app.controllers.User:index')->bind('user.index');
 $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
 $app->match('/users/{id}', 'app.controllers.User:edit')->method('GET|POST')->bind('user.edit');
 
+// Books
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
+$app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POST')->bind('book.reserved');
+
+// Articles
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
 $app->get('/articles/create', 'app.controllers.Article:create')->bind('article.create');
-$app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');

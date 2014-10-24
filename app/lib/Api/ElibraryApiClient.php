@@ -86,9 +86,9 @@ class ElibraryApiClient extends Client
         );
     }
 
-    public function getUsers()
+    public function getUsers($params = [])
     {
-        return $this->send($this->buildRequest('GET', '/users'));
+        return $this->send($this->buildRequest('GET', '/users', $params));
     }
 
     /**

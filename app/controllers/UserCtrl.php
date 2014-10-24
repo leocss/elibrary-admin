@@ -41,9 +41,14 @@ class UserCtrl extends BaseCtrl
      *
      * @return string
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->client->getUsers();
+        $params = ['query' => []];
+        if ($request->query->has('filter')) {
+            $params['query']['filter'] = $request->query->get('filter');
+        }
+
+        $users = $this->client->getUsers($params);
 
         return $this->view->render(
             'user/index.twig',
@@ -64,7 +69,7 @@ class UserCtrl extends BaseCtrl
         $user = $this->client->getUser($id);
 
         return $this->view->render(
-            'user/view.twig',
+            'user/edit.twig',
             [
                 'user' => $user
             ]
