@@ -73,6 +73,11 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
+    public function getStats($params = [])
+    {
+        return $this->send($this->buildRequest('GET', '/stats', $params));
+    }
+
     public function createUser($data)
     {
         return $this->send(

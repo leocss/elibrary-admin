@@ -24,6 +24,7 @@ class AdminCtrl extends BaseCtrl
             if (array_key_exists($post['id'], $credentials)) {
                 if ($credentials[$post['id']]['password'] == $post['password']) {
                     $_SESSION['uid'] = $credentials[$post['id']];
+
                     return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
                 }
             }
@@ -37,7 +38,14 @@ class AdminCtrl extends BaseCtrl
      */
     public function dashboard()
     {
-        return $this->view->render('admin/dashboard.twig');
+        $stats = $this->client->getStats();
+
+        return $this->view->render(
+            'admin/dashboard.twig',
+            [
+                'stats' => $stats
+            ]
+        );
     }
 
     public function register()
