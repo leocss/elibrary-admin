@@ -11,6 +11,7 @@ use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Post\PostFile;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -122,11 +123,58 @@ class ElibraryApiClient extends Client
         );
     }
 
+    /**
+     * @param $id
+     * @return ResponseInterface
+     */
     public function deleteUser($id)
     {
         return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
     }
 
+    /**
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function createPost($data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', '/posts', array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function updatePost($id, $data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/posts/%s', $id), array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $id
+     * @param UploadedFile $image
+     * @return ResponseInterface
+     */
+    public function uploadPostFeaturedImage($id, UploadedFile $image)
+    {
+        $request = $this->buildRequest('POST', sprintf('/posts/%s/image', $id));
+        $request->getBody()->setField('name', $image->getClientOriginalName());
+        $request->getBody()->addFile(new PostFile('image', fopen($image->getRealPath(), 'r')));
+
+        return $this->send($request);
+    }
+
+    /**
+     * @param array $params
+     * @return ResponseInterface
+     */
     public function getPosts($params = array())
     {
         return $this->send($this->buildRequest('GET', '/posts'));
@@ -140,6 +188,11 @@ class ElibraryApiClient extends Client
     public function deletePost($id)
     {
         return $this->send($this->buildRequest('DELETE', sprintf('/posts/%s', $id)));
+    }
+
+    public function getPostCategories()
+    {
+        return $this->send($this->buildRequest('GET', '/posts/categories'));
     }
 
     /**

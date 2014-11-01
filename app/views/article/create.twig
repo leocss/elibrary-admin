@@ -1,7 +1,7 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Admin Upload | {{ parent() }}
+    Create Article | {{ parent() }}
 {% endblock %}
 
 {% block content %}
@@ -12,23 +12,12 @@
     <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
         <div class="container-fluid">
             <div class="row main-content">
-                <div class="col-md-9">
-
+                <div class="col-md-8">
                     {% include 'partials/errors.twig' with errors %}
-
-                    {% include 'article/form.twig' %}
-
+                    {% include 'article/form-main.twig' %}
                 </div>
-                <div class="col-md-3">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3>Featured Image</h3>
-                        </div>
-                        <div class="box-body">
-
-                        </div>
-                    </div>
-
+                <div class="col-md-4">
+                    {% include 'article/form-side.twig' %}
                 </div>
             </div>
         </div>

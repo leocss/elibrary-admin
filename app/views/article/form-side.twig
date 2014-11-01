@@ -1,0 +1,51 @@
+<div class="box box-default">
+    <div class="box-header">
+        <h3>Select Category</h3>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <select name="article[category_id]" class="form-control">
+                    <option value="">Select Category:</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}"
+                                {% if article.category_id == category.id %}selected="selected"{% endif %}>
+                            {{ category.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-default">
+    <div class="box-header">
+        <h3>Extra Options</h3>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="checkbox" name="article[is_featured]"
+                       {% if article.is_featured %}checked="checked"{% endif %}> Feature Article
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-default">
+    <div class="box-header">
+        <h3>Featured Image</h3>
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="">
+                    <img src="{{ article.image_url | default(app.default_article_image) }}" class="img-responsive" alt="Featured Image"/>
+                </div>
+                <input type="file" class="form-control" name="featured_image" value="1">
+            </div>
+        </div>
+    </div>
+</div>

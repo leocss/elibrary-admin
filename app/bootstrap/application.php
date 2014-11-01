@@ -107,23 +107,24 @@ $app->before(
         $app['time'] = time();
 
         $elibraryClient = $app['app.lib.ElibraryApiClient'];
+
+        $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
+    },
+    Silex\Application::EARLY_EVENT
+);
+
+$app->before(
+    function (Request $request) use ($app) {
+        $app['url_segments'] = array_filter(explode('/', trim($request->getPathInfo(), '/ ')));
+
         // Ensure that the user is logged in...
         if ($request->getPathInfo() != '/') { // Prevent from auth check if on main page
             if (!$app['session']->has('auth.user') || (($user = $app['session']->get('auth.user')) && !isset($user['id']))) {
                 return $app->redirect($app['url_generator']->generate('backend.main'));
             }
         }
-
-        $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
-        $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
-        $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
-    },
-    Silex\Application::LATE_EVENT
-);
-
-$app->before(
-    function (Request $request) use ($app) {
-        $app['url_segments'] = array_filter(explode('/', trim($request->getPathInfo(), '/ ')));
 
         // Register a global 'errors' variable that will be available in all
         // views of this library application...
@@ -182,7 +183,8 @@ $app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POS
 
 // Articles
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
-$app->get('/articles/create', 'app.controllers.Article:create')->bind('article.create');
+$app->match('/articles/create', 'app.controllers.Article:create')->method('GET|POST')->bind('article.create');
+$app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST')->bind('article.edit');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
