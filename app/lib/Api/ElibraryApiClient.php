@@ -41,11 +41,10 @@ class ElibraryApiClient extends Client
 
     protected $accessToken = null;
 
-    public function __construct(Application $app, Session $session, $options)
+    public function __construct(Session $session, $options)
     {
         $this->session = $session;
-        $this->app = $app;
-        parent::__construct(['base_url' => $options['endpoint']]);
+        parent::__construct(['base_url' => $options['base_url']]);
     }
 
     public function setApiEndpoint($url)
@@ -202,13 +201,13 @@ class ElibraryApiClient extends Client
      * @param $opts
      * @return \GuzzleHttp\Message\RequestInterface
      */
-    protected function buildRequest($method, $endpoint, $opts = [])
+    public function buildRequest($method, $endpoint, $opts = [])
     {
         $request = $this->createRequest($method, $endpoint, $opts);
 
         $request->setHeader(
             'Authorization',
-            'Bearer ' . $this->app['app.lib.api.elibrary_client_id'] . ':' . $this->app['app.lib.api.elibrary_client_secret']
+            'Bearer ' . $this->clientId . ':' . $this->clientSecret
         );
 
         // Set Content-Type header to application/json
