@@ -1,22 +1,30 @@
 (function ($) {
+  var setUserTypeInputPlaceholder = function (type) {
+    var $input_unique_id = $('#input-unique-id');
+
+    switch (type) {
+      case 'staff':
+        $input_unique_id.attr('placeholder', 'Enter staff id here...');
+        break;
+      case 'student':
+        $input_unique_id.attr('placeholder', 'Enter student\'s matric number here...');
+        break;
+      case 'admin':
+        $input_unique_id.attr('placeholder', 'Enter admins\'s staff id');
+        break;
+      default:
+        $input_unique_id.attr('placeholder', 'Select a user type first...');
+        break;
+    }
+  }
 
   $(function () {
-    // Create user page
+
+    setUserTypeInputPlaceholder($('#input-user-type').val());
+    // Create / Delete user page
     $('#input-user-type').on('change', function (e) {
       var $this = $(this);
-      var $input_unique_id = $('#input-unique-id');
-
-      switch ($this.val()) {
-        case 'staff':
-          $input_unique_id.attr('placeholder', 'Enter staff id here...');
-          break;
-        case 'student':
-          $input_unique_id.attr('placeholder', 'Enter student\'s matric number here...');
-          break;
-        default:
-          $input_unique_id.attr('placeholder', 'Select a user type first...');
-          break;
-      }
+      setUserTypeInputPlaceholder($this.val());
     });
 
     $('#btn-generate-password').on('click', function () {
@@ -60,7 +68,7 @@
           type: 'delete',
           dataType: 'json',
           success: function (res) {
-            $container.fadeOut('slow').done(function() {
+            $container.fadeOut('slow').done(function () {
               $container.remove();
             });
           }

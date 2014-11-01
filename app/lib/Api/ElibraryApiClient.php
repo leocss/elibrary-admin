@@ -107,20 +107,16 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
 
+    /**
+     * @param $id
+     * @param $data
+     * @return ResponseInterface
+     */
     public function updateUser($id, $data)
     {
-        return $this->send(
-            $this->buildRequest(
-                'POST',
-                sprintf('/users/%s', $id),
-                [
-                    'body' => [
-                        'first_name' => 'Laju',
-                        'last_name' => 'Morrison'
-                    ]
-                ]
-            )
-        );
+        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
+            'body' => $data
+        ]));
     }
 
     /**

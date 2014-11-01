@@ -23,6 +23,8 @@ class UserCtrl extends BaseCtrl
         $params = [];
         if ($request->isMethod('post')) {
             $data = $request->request->get('user');
+            print_r($data);
+            exit;
 
             try {
                 $response = $this->client->createUser($data);
@@ -64,15 +66,24 @@ class UserCtrl extends BaseCtrl
      * @param $id User ID
      * @return string
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $params = [];
         $user = $this->client->getUser($id);
+        $params['user'] = $user;
 
-        return $this->view->render(
-            'user/edit.twig',
-            [
-                'user' => $user
-            ]
-        );
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('user');
+
+            try {
+                if ($this->client->updateUser($id, $post)) {
+                    return $this->app->redirect($this->app['url_generator']->generate('user.edit', ['id' => $id]));
+                }
+            } catch (ApiException $e) {
+                $params['errors'][] = $e->getMessage();
+            }
+        }
+
+        return $this->view->render('user/edit.twig', $params);
     }
 }

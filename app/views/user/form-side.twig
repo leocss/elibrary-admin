@@ -1,0 +1,28 @@
+<div class="box box-default">
+    <div class="box-header">
+        <span class="fa fa-key"></span> Secure Card Number
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <p>
+                    <strong>RFID Number </strong>
+                </p>
+                {% if user is not defined %}
+                    <input type="text" class="form-control" name="user[rfid]"
+                           placeholder="Enter RFID here..."/>
+                {% else %}
+                    <input type="text" class="form-control disabled" disabled="disabled" value="{{ user.rfid }}"/>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if user is not defined %}
+            <p class="alert alert-info">
+                <strong>Instructions</strong> <br/>
+                Scan the card to be issued to the user and type in the
+                number displayed on the screen...
+            </p>
+        {% endif %}
+    </div>
+</div>
