@@ -48,13 +48,16 @@ class AdminCtrl extends BaseCtrl
     public function dashboard()
     {
         $stats = $this->client->getStats();
-
-        return $this->view->render(
-            'admin/dashboard.twig',
-            [
-                'stats' => $stats
+        $recentUsers = $this->client->getUsers([
+            'query' => [
+                'limit' => 5
             ]
-        );
+        ]);
+
+        return $this->view->render('admin/dashboard.twig', [
+            'stats' => $stats,
+            'recentUsers' => $recentUsers
+        ]);
     }
 
     public function register()
