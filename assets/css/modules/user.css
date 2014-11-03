@@ -1,0 +1,19 @@
+#user-index .user-item {
+    margin-bottom: 20px;
+    background-color: #F6F6F6;
+    padding: 10px;
+}
+
+#user-index .user-item img {
+    height: 80px;
+    width: 80px;
+}
+
+#user-index .user-list {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#user-index .action-btns {
+    margin-top: 20px;
+}

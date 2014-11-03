@@ -13,8 +13,9 @@ $app = new Silex\Application();
  * Define App Config
  */
 $app['debug'] = true;
-$app['app.lib.api.elibrary_client_id'] = '9d81c76533b0407d7c52e0ebd5ba2dcf';
-$app['app.lib.api.elibrary_client_secret'] = 'ebe661a508c4fc56a69643cb8087b005';
+$app['api_server_url'] = 'http://127.0.0.1:4000';
+$app['api_client_id'] = '9d81c76533b0407d7c52e0ebd5ba2dcf';
+$app['api_client_secret'] = 'ebe661a508c4fc56a69643cb8087b005';
 
 /**
  * Register Services
@@ -76,11 +77,12 @@ $app->error(
  */
 $app['app.lib.ElibraryApiClient'] = $app->share(
     function () use ($app) {
-        $client = new \Elibrary\Lib\Api\ElibraryApiClient($app, $app['session'], [
-            'endpoint' => 'http://127.0.0.1:4000'
+        $client = new \Elibrary\Lib\Api\ElibraryApiClient($app['session'], [
+            'base_url' => $app['api_server_url']
         ]);
-        $client->setClientId($app['app.lib.api.elibrary_client_id']);
-        $client->setClientSecret($app['app.lib.api.elibrary_client_secret']);
+
+        $client->setClientId($app['api_client_id']);
+        $client->setClientSecret($app['api_client_secret']);
 
         return $client;
     }
@@ -102,21 +104,27 @@ $app['app.GlobalCtrlDependencies'] = $app->share(
 $app->before(
     function (Request $request) use ($app) {
         $app['base_url'] = $request->getUriForPath('/');
+        $app['time'] = time();
 
         $elibraryClient = $app['app.lib.ElibraryApiClient'];
-        // Ensure that the user is logged in...
-        if ($request->getPathInfo() != '/') { // Prevent from auth check if on main page
-            /*if (!$elibraryClient->getSessionUser()) {
-                return $app->redirect($app['url_generator']->generate('backend.main'));
-            }*/
-        }
+
+        $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
+        $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
     },
-    Silex\Application::LATE_EVENT
+    Silex\Application::EARLY_EVENT
 );
 
 $app->before(
     function (Request $request) use ($app) {
         $app['url_segments'] = array_filter(explode('/', trim($request->getPathInfo(), '/ ')));
+
+        // Ensure that the user is logged in...
+        if ($request->getPathInfo() != '/') { // Prevent from auth check if on main page
+            if (!$app['session']->has('auth.user') || (($user = $app['session']->get('auth.user')) && !isset($user['id']))) {
+                return $app->redirect($app['url_generator']->generate('backend.main'));
+            }
+        }
 
         // Register a global 'errors' variable that will be available in all
         // views of this library application...
@@ -160,19 +168,28 @@ $app['app.controllers.Ajax'] = $app->share(
 
 // Application Routes
 $app->match('/', 'app.controllers.Admin:main')->method('GET|POST')->bind('backend.main');
+$app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
 $app->match('/dashboard', 'app.controllers.Admin:dashboard')->method('GET|POST')->bind('admin.dashboard');
+
+// Users
 $app->get('/users', 'app.controllers.User:index')->bind('user.index');
 $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')->bind('user.create');
-$app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
+$app->match('/users/{id}', 'app.controllers.User:edit')->method('GET|POST')->bind('user.edit');
+
+// Books
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
 $app->match('/books/manage', 'app.controllers.Book:manage')->method('GET|POST')->bind('book.manage');
 $app->match('/books/view/{id}', 'app.controllers.Book:view')->method('GET|POST')->bind('book.view');
+$app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POST')->bind('book.reserved');
+
+// Articles
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
-$app->get('/articles/create', 'app.controllers.Article:create')->bind('article.create');
-$app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');
+$app->match('/articles/create', 'app.controllers.Article:create')->method('GET|POST')->bind('article.create');
+$app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST')->bind('article.edit');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
+$app->delete('/ajax/articles/{id}', 'app.controllers.Ajax:deleteArticle');
 
 return $app;

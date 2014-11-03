@@ -1,7 +1,7 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Admin Upload | {{ parent() }}
+    Create Article | {{ parent() }}
 {% endblock %}
 
 {% block content %}
@@ -12,39 +12,12 @@
     <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
         <div class="container-fluid">
             <div class="row main-content">
-                <div class="col-md-9">
-
+                <div class="col-md-8">
                     {% include 'partials/errors.twig' with errors %}
-
-                    <div class="box box-default">
-                        <div class="box-body">
-
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" name="user[address]"
-                                           placeholder="Title">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <button class="btn btn-primary" type="submit">Publish Article</button>
-                            <a href="{{ app.url_generator.generate('admin.dashboard') }}" class="btn btn-default"
-                               type="button">Cancel</a>
-                        </div>
-                    </div>
-
+                    {% include 'article/form-main.twig' %}
                 </div>
-                <div class="col-md-3">
-                    <div class="box box-default">
-                        <div class="box-header">
-                            <h3>Featured Image</h3>
-                        </div>
-                        <div class="box-body">
-
-                        </div>
-                    </div>
-
+                <div class="col-md-4">
+                    {% include 'article/form-side.twig' %}
                 </div>
             </div>
         </div>

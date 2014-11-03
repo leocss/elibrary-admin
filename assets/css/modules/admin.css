@@ -1,0 +1,69 @@
+#admin-dashboard .stat {
+    padding: 15px;
+    color: #FFFFFF;
+    border: none;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+#admin-dashboard .stat-icon {
+    float: left;
+    height: 80px;
+    width: 80px;
+}
+
+#admin-dashboard .stat-icon .fa {
+    font-size: 50px;
+    color: #FFFFFF;
+    float: left;
+    margin-right: 20px;
+    margin: 17px 0px 0px 14px;
+}
+
+#admin-dashboard .stat-green {
+    background: #fff;
+    color: #2eb79d;
+}
+
+#admin-dashboard .stat-green .stat-icon {
+    background: #2eb79d;
+}
+
+#admin-dashboard .stat-blue {
+    background: #fff;
+    color: #00a2d3;
+}
+
+#admin-dashboard .stat-blue .stat-icon {
+    background: #00a2d3;
+}
+
+#admin-dashboard .stat-red {
+    background: #fff;
+    color: #e84c3d;
+}
+
+#admin-dashboard .stat-red .stat-icon {
+    background: #e84c3d;
+}
+
+#admin-dashboard .stat-gray {
+    background: #fff;
+    color: #34495e;
+}
+
+#admin-dashboard .stat-gray .stat-icon {
+    background: #34495e;
+}
+
+#admin-dashboard .stat-content strong {
+    display: block;
+}
+
+#admin-dashboard .stat-content small {
+    display: block;
+    margin-top: 10px;
+}

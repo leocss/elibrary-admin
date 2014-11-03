@@ -1,0 +1,27 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Edit User | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div id="user-edit">
+        <div class="page-header">
+            <h2>Edit {{ user.type }} ({{ user.unique_id }}) - # {{ user.id }}  </h2>
+        </div>
+        <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
+            <div class="container-fluid">
+                <div class="row main-content">
+                    <div class="col-md-8">
+
+                        {% include 'partials/errors.twig' with errors %}
+                        {% include 'user/form-main.twig' with user %}
+                    </div>
+                    <div class="col-md-4">
+                        {% include 'user/form-side.twig' with user %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

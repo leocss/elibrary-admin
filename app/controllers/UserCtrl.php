@@ -12,11 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserCtrl extends BaseCtrl
 {
+    /**
+     * Creates a new user
+     *
+     * @param Request $request
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function create(Request $request)
     {
         $params = [];
         if ($request->isMethod('post')) {
             $data = $request->request->get('user');
+            print_r($data);
+            exit;
 
             try {
                 $response = $this->client->createUser($data);
@@ -30,9 +38,19 @@ class UserCtrl extends BaseCtrl
         return $this->view->render('user/create.twig', $params);
     }
 
-    public function index()
+    /**
+     * List / Manage users
+     *
+     * @return string
+     */
+    public function index(Request $request)
     {
-        $users = $this->client->getUsers();
+        $params = ['query' => []];
+        if ($request->query->has('filter')) {
+            $params['query']['filter'] = $request->query->get('filter');
+        }
+
+        $users = $this->client->getUsers($params);
 
         return $this->view->render(
             'user/index.twig',
@@ -42,15 +60,30 @@ class UserCtrl extends BaseCtrl
         );
     }
 
-    public function view($id)
+    /**
+     * View / Edit a user
+     *
+     * @param $id User ID
+     * @return string
+     */
+    public function edit(Request $request, $id)
     {
+        $params = [];
         $user = $this->client->getUser($id);
+        $params['user'] = $user;
 
-        return $this->view->render(
-            'user/view.twig',
-            [
-                'user' => $user
-            ]
-        );
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('user');
+
+            try {
+                if ($this->client->updateUser($id, $post)) {
+                    return $this->app->redirect($this->app['url_generator']->generate('user.edit', ['id' => $id]));
+                }
+            } catch (ApiException $e) {
+                $params['errors'][] = $e->getMessage();
+            }
+        }
+
+        return $this->view->render('user/edit.twig', $params);
     }
 }

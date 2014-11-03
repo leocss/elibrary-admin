@@ -2,6 +2,7 @@
 
 namespace Elibrary\Controllers;
 
+use Elibrary\Lib\Exception\ApiException;
 use Elibrary\lib\Service\AdminService;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,15 +18,24 @@ class AdminCtrl extends BaseCtrl
      */
     public function main(Request $request)
     {
-        if ($post = $request->request->all()) {
+        if ($request->isMethod('post')) {
+            try {
+                $user = $this->client->send($this->client->buildRequest('GET', '/users/check', [
+                    'query' => [
+                        'unique_id' => $request->request->get('id'),
+                        'password' => $request->request->get('password')
+                    ]
+                ]));
 
-            $credentials = json_decode(file_get_contents(__DIR__ . '/../storage/data/users.json'), true);
-
-            if (array_key_exists($post['id'], $credentials)) {
-                if ($credentials[$post['id']]['password'] == $post['password']) {
-                    $_SESSION['uid'] = $credentials[$post['id']];
-                    return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+                if ($user['type'] != 'admin') {
+                    return $this->app->redirect($this->app['url_generator']->generate('backend.main'));
                 }
+
+                $this->session->set('auth.user', $user);
+                return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+            } catch (ApiException $e) {
+
+                $this->alerts->set('errors', $e->getMessage());
             }
         }
 
@@ -37,7 +47,17 @@ class AdminCtrl extends BaseCtrl
      */
     public function dashboard()
     {
-        return $this->view->render('admin/dashboard.twig');
+        $stats = $this->client->getStats();
+        $recentUsers = $this->client->getUsers([
+            'query' => [
+                'limit' => 5
+            ]
+        ]);
+
+        return $this->view->render('admin/dashboard.twig', [
+            'stats' => $stats,
+            'recentUsers' => $recentUsers
+        ]);
     }
 
     public function register()
@@ -47,9 +67,8 @@ class AdminCtrl extends BaseCtrl
 
     public function logout()
     {
-        if ($_SESSION['uid']) {
-            unset($_SESSION['uid']);
-
+        if ($this->session->has('auth.user')) {
+            $this->session->remove('auth.user');
             return $this->app->redirect($this->app['url_generator']->generate('backend.main'));
         } else {
             return $this->app->redirect($this->app['url_generator']->generate('backend.main'));

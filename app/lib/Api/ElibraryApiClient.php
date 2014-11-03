@@ -11,6 +11,7 @@ use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Post\PostFile;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -41,11 +42,10 @@ class ElibraryApiClient extends Client
 
     protected $accessToken = null;
 
-    public function __construct(Application $app, Session $session, $options)
+    public function __construct(Session $session, $options)
     {
         $this->session = $session;
-        $this->app = $app;
-        parent::__construct(['base_url' => $options['endpoint']]);
+        parent::__construct(['base_url' => $options['base_url']]);
     }
 
     public function setApiEndpoint($url)
@@ -73,6 +73,11 @@ class ElibraryApiClient extends Client
         $this->accessToken = $accessToken;
     }
 
+    public function getStats($params = [])
+    {
+        return $this->send($this->buildRequest('GET', '/stats', $params));
+    }
+
     public function createUser($data)
     {
         return $this->send(
@@ -86,9 +91,9 @@ class ElibraryApiClient extends Client
         );
     }
 
-    public function getUsers()
+    public function getUsers($params = [])
     {
-        return $this->send($this->buildRequest('GET', '/users'));
+        return $this->send($this->buildRequest('GET', '/users', $params));
     }
 
     /**
@@ -101,7 +106,6 @@ class ElibraryApiClient extends Client
     {
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
-
     public function addBook($data, $document)
     {
         $request = $this->buildRequest('POST', '/books');
@@ -126,27 +130,70 @@ class ElibraryApiClient extends Client
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
     }
+    /**
+     * @param $id
+     * @param $data
+     * @return ResponseInterface
+     */
     public function updateUser($id, $data)
     {
-        return $this->send(
-            $this->buildRequest(
-                'POST',
-                sprintf('/users/%s', $id),
-                [
-                    'body' => [
-                        'first_name' => 'Laju',
-                        'last_name' => 'Morrison'
-                    ]
-                ]
-            )
-        );
+        return $this->send($this->buildRequest('POST', sprintf('/users/%s', $id), [
+            'body' => $data
+        ]));
     }
 
+    /**
+     * @param $id
+     * @return ResponseInterface
+     */
     public function deleteUser($id)
     {
         return $this->send($this->buildRequest('DELETE', sprintf('/users/%s', $id)));
     }
 
+    /**
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function createPost($data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', '/posts', array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function updatePost($id, $data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/posts/%s', $id), array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $id
+     * @param UploadedFile $image
+     * @return ResponseInterface
+     */
+    public function uploadPostFeaturedImage($id, UploadedFile $image)
+    {
+        $request = $this->buildRequest('POST', sprintf('/posts/%s/image', $id));
+        $request->getBody()->setField('name', $image->getClientOriginalName());
+        $request->getBody()->addFile(new PostFile('image', fopen($image->getRealPath(), 'r')));
+
+        return $this->send($request);
+    }
+
+    /**
+     * @param array $params
+     * @return ResponseInterface
+     */
     public function getPosts($params = array())
     {
         return $this->send($this->buildRequest('GET', '/posts'));
@@ -155,6 +202,16 @@ class ElibraryApiClient extends Client
     public function getPost($id)
     {
         return $this->send($this->buildRequest('GET', sprintf('/posts/%s', $id)));
+    }
+
+    public function deletePost($id)
+    {
+        return $this->send($this->buildRequest('DELETE', sprintf('/posts/%s', $id)));
+    }
+
+    public function getPostCategories()
+    {
+        return $this->send($this->buildRequest('GET', '/posts/categories'));
     }
 
     /**
@@ -199,13 +256,13 @@ class ElibraryApiClient extends Client
      * @param $opts
      * @return \GuzzleHttp\Message\RequestInterface
      */
-    protected function buildRequest($method, $endpoint, $opts = [])
+    public function buildRequest($method, $endpoint, $opts = [])
     {
         $request = $this->createRequest($method, $endpoint, $opts);
 
         $request->setHeader(
             'Authorization',
-            'Bearer ' . $this->app['app.lib.api.elibrary_client_id'] . ':' . $this->app['app.lib.api.elibrary_client_secret']
+            'Bearer ' . $this->clientId . ':' . $this->clientSecret
         );
 
         // Set Content-Type header to application/json

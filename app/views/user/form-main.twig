@@ -1,0 +1,96 @@
+<div class="box box-default">
+    <div class="box-header">
+        <h3 class="content-header">User Details</h3>
+    </div>
+    <div class="box-body">
+
+        <h4>Account Information</h4>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                <select id="input-user-type" name="user[type]" class="form-control">
+                    <option value="">Select User Type</option>
+                    <option value="admin" {% if user.type == 'admin' %}selected="selected"{% endif %}>Admin</option>
+                    <option value="staff" {% if user.type == 'staff' %}selected="selected"{% endif %}>Staff</option>
+                    <option value="student" {% if user.type == 'student' %}selected="selected"{% endif %}>Student
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <input type="text"
+                       id="input-unique-id"
+                       class="form-control" name="user[unique_id]"
+                       placeholder="Select a user type first..."
+                       value="{{ user.unique_id | default('') }}">
+            </div>
+        </div>
+
+        <h4>Personal Information</h4>
+
+        <div class="form-group">
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="user[first_name]"
+                       placeholder="First Name" value="{{ user.first_name | default('') }}">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="user[last_name]"
+                       placeholder="Last Name" value="{{ user.last_name | default('') }}">
+            </div>
+            <div class="col-md-4">
+                <select name="user[gender]" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="M" {% if user.gender == 'M' %}selected="selected"{% endif %}>Male</option>
+                    <option value="F" {% if user.gender == 'F' %}selected="selected"{% endif %}>Female</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name="user[email]" placeholder="Email"
+                       value="{{ user.email | default('') }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name="user[phone]" placeholder="Phone Number"
+                       value="{{ user.phone | default('') }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name="user[address]"
+                       placeholder="Home Address"
+                       value="{{ user.address | default('') }}">
+            </div>
+        </div>
+
+        {% if user is not defined %}
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="fa fa-key"></span>
+                        </button>
+                    </span>
+                        <input type="text" id="input-user-password" class="form-control" name="user[password]">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="btn-generate-password" type="button">
+                            Generate User Password !
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="box-footer">
+        <button class="btn btn-primary" type="submit">{% if user %}Update{% else %}Create{% endif %} User</button>
+        <a href="{{ app.url_generator.generate('admin.dashboard') }}" class="btn btn-default"
+           type="button">Cancel</a>
+    </div>
+</div>
