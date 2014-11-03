@@ -123,7 +123,6 @@ class ElibraryApiClient extends Client
 
     public function uploadPreviewImage($id, $file)
     {
-        print_r($file->getRealPath());exit;
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
     }
@@ -184,23 +183,6 @@ class ElibraryApiClient extends Client
     public function getBook($bookId)
     {
         return $this->prepareBook($this->send($this->buildRequest('GET', sprintf('/books/%d', $bookId))));
-    }
-
-    public function addBook($data)
-    {
-        $request = $this->buildRequest('POST', '/books');
-        $request->getBody()->setField('category_id', $data['category']);
-        $request->getBody()->setField('title', $data['title']);
-        $request->getBody()->setField('author', $data['author']);
-        $request->getBody()->setField('edition', $data['edition']);
-        $request->getBody()->setField('overview', $data['overview']);
-        $request->getBody()->setField('file_name', $data['file']['name']);
-        $request->getBody()->setField('has_soft_copy', $data['has_soft_copy']);
-        $request->getBody()->setField('has_hard_copy', $data['has_hard_copy']);
-        $request->getBody()->setField('created_at', date('Y-m-d H:i:s', time()));
-        $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
-
-        return $this->send($request);
     }
 
     /**

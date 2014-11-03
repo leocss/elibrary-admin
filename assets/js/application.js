@@ -43,6 +43,11 @@
         }
       });
 
+        //delete book
+        $('.delete-book').on('click', function(){
+            alert('delete');
+        });
+
       return false;
     });
   });

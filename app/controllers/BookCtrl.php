@@ -13,8 +13,9 @@ class BookCtrl extends BaseCtrl
 
     public function add(Request $request)
     {
-        if($post = $request->request->all()){
-            $input = array_merge($post, $_FILES);
+        if($request->isMethod('post')){
+
+            $input = array_merge($request->request->all(), $_FILES);
 
             $file_name = $input['image']['name'];
             $file_size = $input['image']['size'];
@@ -24,16 +25,36 @@ class BookCtrl extends BaseCtrl
 
             if($res = $this->client->addBook($input, $request->files->get('image'))){
                 if($this->client->uploadPreviewImage($res['id'], $request->files->get('image'))){
-                    //return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+                    $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
+                    return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
                 }
             }
 
         }
         $categories = $this->client->getCategories();
-        
+
         return $this->view->render('book/add.twig',
             [
                 'categories' => $categories
+            ]);
+    }
+
+    public function manage()
+    {
+        $books = $this->client->getBooks();
+
+        return $this->view->render('book/manage.twig', [
+            'books' => $books,
+        ]);
+    }
+
+    public function view($id)
+    {
+        $book = $this->client->getBook($id);
+
+        return $this->view->render('book/view.twig',
+            [
+                'book' => $book,
             ]);
     }
 }

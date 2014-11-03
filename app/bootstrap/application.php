@@ -166,6 +166,8 @@ $app->match('/users/create', 'app.controllers.User:create')->method('GET|POST')-
 $app->match('/users/{id}', 'app.controllers.User:view')->method('GET|POST')->bind('user.view');
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
+$app->match('/books/manage', 'app.controllers.Book:manage')->method('GET|POST')->bind('book.manage');
+$app->match('/books/view/{id}', 'app.controllers.Book:view')->method('GET|POST')->bind('book.view');
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
 $app->get('/articles/create', 'app.controllers.Article:create')->bind('article.create');
 $app->match('/logout', 'app.controllers.Admin:logout')->method('GET|POST')->bind('user.logout');

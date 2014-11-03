@@ -1,0 +1,36 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Admin Upload | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h4>Manage book</h4>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <th>S/N</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Edition</th>
+                <th>Published at</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.edition }}</td>
+                        <td>{{ book.published_at }}</td>
+                        <td>
+                            <a href="{{ app.url_generator.generate('book.view') }}" id="" class="btn btn-primary edit-book">Edit</a>
+                            <a href="#" id="bookid-{{ book.id }}" class="btn btn-danger delete-book">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
