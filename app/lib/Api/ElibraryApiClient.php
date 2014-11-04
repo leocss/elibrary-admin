@@ -245,6 +245,45 @@ class ElibraryApiClient extends Client
     }
 
     /**
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function createEtestCourse($data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', '/etest/courses', array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $courseId
+     * @param $data
+     * @param $params
+     * @return ResponseInterface
+     */
+    public function createEtestQuestion($courseId, $data, $params)
+    {
+        return $this->send(
+            $this->buildRequest('POST', sprintf('/etest/courses/%s/questions', $courseId),
+                array_merge($params, [
+                    'body' => $data
+                ])
+            )
+        );
+    }
+
+    /**
+     * @param $courseId
+     * @param $params
+     * @return ResponseInterface
+     */
+    public function getEtestCourseQuestions($courseId, $params)
+    {
+        return $this->send($this->buildRequest('GET', sprintf('/etest/courses/%s', $courseId), $params));
+    }
+
+    /**
      * @param array $params
      * @return ResponseInterface
      */
