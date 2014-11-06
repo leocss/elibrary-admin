@@ -45,7 +45,7 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-12">
-                        <select class="form-control" name="question[type]">
+                        <select class="form-control" id="question-type-select" name="question[type]">
                           <option value="">Select Option Type</option>
                           {% for type in ['multiple_choice', 'true_or_false'] %}
                             <option value="{{ type }}">{{ type }}</option>
@@ -63,11 +63,12 @@
                         {% for i in ['True', 'False'] %}
                           <div class="col-sm-12">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Text for {{ i }}..."/>
+                              <input type="text" name="question[options][{{ loop.index }}]" class="form-control"
+                                     placeholder="Text for {{ i }}..."/>
 
                               <span class="input-group-addon">
                                 <input type="radio" name="question[answer]"
-                                       value="{% if i == 'True' %}1{% else %}0{% endif %}"/>
+                                       value="{{ loop.index }}"/>
                               </span>
                             </div>
                           </div>
@@ -77,10 +78,11 @@
                         {% for i in [1, 2, 3, 4] %}
                           <div class="col-sm-12">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Text for option {{ i }}..."/>
+                              <input type="text" class="form-control" name="question[options][{{ loop.index }}]"
+                                     placeholder="Text for option {{ i }}..."/>
 
                               <span class="input-group-addon">
-                                <input type="radio" name="question[answer]"/>
+                                <input type="radio" name="question[answer]" value="{{ loop.index }}"/>
                               </span>
                             </div>
                           </div>
@@ -88,6 +90,11 @@
                       </div>
                     </div>
                   </div>
+
+                  <p>
+                    Enter the text for the options and checkmark the round box at the right
+                    to select which option is the right answer.
+                  </p>
                 </div>
               </div>
             </div>

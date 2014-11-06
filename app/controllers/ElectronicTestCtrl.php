@@ -72,6 +72,16 @@ class ElectronicTestCtrl extends BaseCtrl
             'query' => ['include' => 'questions']
         ]);
 
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('question');
+            $this->client->createEtestQuestion($course_id, $post);
+
+            return $this->app->redirect($this->app['url_generator']->generate('etest.course-questions', [
+                    'course_id' => $course_id
+                ]
+            ));
+        }
+
         return $this->view->render('etest/course-questions.twig', [
             'course' => $course
         ]);

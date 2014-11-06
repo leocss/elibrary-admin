@@ -83,7 +83,27 @@
       return false;
     });
 
+    var $tof = $('#question-options-true-or-false').clone();
+    var $mc = $('#question-options-multiple-choice').clone();
+
+    $tof.end().remove();
+    $mc.end().remove();
+
     // TODO Create question form.. show and hide options type
+    $('#question-type-select').on('change', function () {
+      var $qopts = $('#question-options');
+      switch ($(this).val()) {
+        case 'multiple_choice':
+          $qopts.find('> .row').html('').append($mc);
+          break;
+        case 'true_or_false':
+          $qopts.find('> .row').html('').append($tof);
+          break;
+        default:
+
+          break;
+      }
+    });
   });
 
 })(jQuery);
