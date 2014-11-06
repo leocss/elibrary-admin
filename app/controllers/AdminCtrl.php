@@ -20,13 +20,13 @@ class AdminCtrl extends BaseCtrl
     {
         if ($request->isMethod('post')) {
             try {
+
                 $user = $this->client->send($this->client->buildRequest('GET', '/users/check', [
                     'query' => [
                         'unique_id' => $request->request->get('id'),
                         'password' => $request->request->get('password')
                     ]
                 ]));
-
                 if ($user['type'] != 'admin') {
                     return $this->app->redirect($this->app['url_generator']->generate('backend.main'));
                 }

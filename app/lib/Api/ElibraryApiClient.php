@@ -78,6 +78,10 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', '/stats', $params));
     }
 
+    public function adminAuthentication()
+    {
+
+    }
     public function createUser($data)
     {
         return $this->send(
