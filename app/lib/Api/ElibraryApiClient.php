@@ -219,6 +219,10 @@ class ElibraryApiClient extends Client
         return $this->prepareBook($this->send($this->buildRequest('GET', sprintf('/books/%d', $bookId))));
     }
 
+    /**
+     * @param $data
+     * @return ResponseInterface
+     */
     public function addBook($data)
     {
         $request = $this->buildRequest('POST', '/books');
@@ -262,6 +266,28 @@ class ElibraryApiClient extends Client
      * @param $params
      * @return ResponseInterface
      */
+    public function updateEtestCourse($courseId, $data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/etest/courses/%s', $courseId), array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $courseId
+     * @return ResponseInterface
+     */
+    public function deleteEtestCourse($courseId)
+    {
+        return $this->send($this->buildRequest('DELETE', sprintf('/etest/courses/%s', $courseId)));
+    }
+
+    /**
+     * @param $courseId
+     * @param $data
+     * @param $params
+     * @return ResponseInterface
+     */
     public function createEtestQuestion($courseId, $data, $params)
     {
         return $this->send(
@@ -292,6 +318,15 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', '/etest/courses', $params));
     }
 
+    /**
+     * @param $id
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function getEtestCourse($id, $params = [])
+    {
+        return $this->send($this->buildRequest('GET', sprintf('/etest/courses/%s', $id), $params));
+    }
 
     /**
      * @param $sessionId

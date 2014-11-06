@@ -30,4 +30,14 @@ class AjaxCtrl extends BaseCtrl
 
         return json_encode(['id' => $id, 'success' => true]);
     }
+
+    public function deleteEtestCourse($id)
+    {
+        $response = $this->client->deleteEtestCourse($id);
+        if (isset($response['error'])) {
+            return json_encode(['error_message' => $response['error']['message']]);
+        }
+
+        return json_encode(['id' => $id, 'success' => true]);
+    }
 }

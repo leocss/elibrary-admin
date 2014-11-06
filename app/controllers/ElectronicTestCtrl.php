@@ -13,55 +13,56 @@ class ElectronicTestCtrl extends BaseCtrl
         //Getting courses from the database
         $courses = $this->client->getEtestCourses();
 
-        return $this->view->render(
-            'etest/index.twig',
-            [
-                'courses' => $courses
-            ]
-        );
-    }
-
-
-    public function create(Request $request)
-    {
-        $courses = $this->client->getEtestCourses();
-
-        $data = [];
-        if ($request->isMethod('post')) {
-            $post = $request->request->get('course');
-           // $user = $this->session->get('auth.user');
-            foreach (['name', 'description'] as $required) {
-                if (isset($post[$required])) {
-                    if ($required == 'name') {
-                        $post[$required] = 1;
-                    }
-
-                    $data[$required] = $post[$required];
-                }
-            }
-
-            //$data['author_id'] = $user['id'];
-            //$data['format'] = 'html';
-
-           $course = $this->client->createEtestCourses($data);
-           // $courses = $this->client-> createEtestCourses($data);
-
-            //if (($image = $request->files->get('featured_image')) && ($image instanceof UploadedFile)) {
-               // if ($image->isValid()) {
-                   // $this->client->uploadPostFeaturedImage($id, $image);
-               // }
-          //  }
-
-            return $this->app->redirect($this->app['url_generator']->generate('etest.index'));
-        }
-
-        return $this->view->render('etest/create.twig', [
+        return $this->view->render('etest/index.twig', [
             'courses' => $courses
         ]);
     }
 
 
+    public function createCourse(Request $request)
+    {
+        $data = [];
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('course');
+            foreach (['name', 'description', 'time_length'] as $required) {
+                if (isset($post[$required])) {
+                    $data[$required] = $post[$required];
+                }
+            }
 
+            $course = $this->client->createEtestCourse($data);
 
+            return $this->app->redirect($this->app['url_generator']->generate('etest.index'));
+        }
 
+        return $this->view->render('etest/create-course.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @param $course_id
+     * @return string
+     */
+    public function viewCourse(Request $request, $course_id)
+    {
+        $course = $this->client->getEtestCourse($course_id);
+
+        $data = [];
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('course');
+            foreach (['name', 'description', 'time_length'] as $required) {
+                if (isset($post[$required])) {
+                    $data[$required] = $post[$required];
+                }
+            }
+
+            if ($this->client->updateEtestCourse($course_id, $data)) {
+                return $this->app->redirect($this->app['url_generator']->generate('etest.index'));
+            }
+        }
+
+        return $this->view->render('etest/view-course.twig', [
+            'course' => $course
+        ]);
+    }
 }

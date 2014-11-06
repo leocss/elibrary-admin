@@ -111,6 +111,7 @@ $app->before(
         $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
         $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
         $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
+        $app['default_etest_course_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
     },
     Silex\Application::EARLY_EVENT
 );
@@ -195,11 +196,13 @@ $app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST'
 // Electronic Test
 
 $app->get('/etest', 'app.controllers.ElectronicTest:index')->bind('etest.index');
-$app->match('/etest/create', 'app.controllers.ElectronicTest:create')->method('GET|POST')->bind('etest.create');
+$app->match('/etest/create-course', 'app.controllers.ElectronicTest:createCourse')->method('GET|POST')->bind('etest.create-course');
+$app->match('/etest/view-course/{course_id}', 'app.controllers.ElectronicTest:viewCourse')->method('GET|POST')->bind('etest.view-course');
 //$app->match('/etest/{id}', 'app.controllers.ElectronicTest:edit')->method('GET|POST')->bind('etest.edit');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
 $app->delete('/ajax/articles/{id}', 'app.controllers.Ajax:deleteArticle');
+$app->delete('/ajax/etest/courses/{id}', 'app.controllers.Ajax:deleteEtestCourse');
 
 return $app;
