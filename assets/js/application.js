@@ -77,6 +77,13 @@
 
       return false;
     });
+
+    // TODO Manage questions... Delete course button clicked
+    $('.delete-course').on('click', function (e) {
+      return false;
+    });
+
+    // TODO Create question form.. show and hide options type
   });
 
 })(jQuery);
