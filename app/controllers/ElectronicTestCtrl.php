@@ -65,4 +65,15 @@ class ElectronicTestCtrl extends BaseCtrl
             'course' => $course
         ]);
     }
+
+    public function courseQuestions(Request $request, $course_id)
+    {
+        $course = $this->client->getEtestCourse($course_id, [
+            'query' => ['include' => 'questions']
+        ]);
+
+        return $this->view->render('etest/course-questions.twig', [
+            'course' => $course
+        ]);
+    }
 }

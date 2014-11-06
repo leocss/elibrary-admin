@@ -198,6 +198,7 @@ $app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST'
 $app->get('/etest', 'app.controllers.ElectronicTest:index')->bind('etest.index');
 $app->match('/etest/create-course', 'app.controllers.ElectronicTest:createCourse')->method('GET|POST')->bind('etest.create-course');
 $app->match('/etest/view-course/{course_id}', 'app.controllers.ElectronicTest:viewCourse')->method('GET|POST')->bind('etest.view-course');
+$app->match('/etest/course-questions/{course_id}', 'app.controllers.ElectronicTest:courseQuestions')->method('GET|POST')->bind('etest.course-questions');
 //$app->match('/etest/{id}', 'app.controllers.ElectronicTest:edit')->method('GET|POST')->bind('etest.edit');
 
 // Ajax Routes

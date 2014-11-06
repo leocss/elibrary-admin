@@ -55,6 +55,11 @@
                                     class="btn btn-xs btn-danger delete-article">
                                 <i class="fa fa-times"></i>
                             </button>
+                            <br/>
+                            <a class="btn btn-xs btn-secondary"
+                               href="{{ app.url_generator.generate('etest.course-questions', {course_id: course.id}) }}">
+                                Manage Questions
+                            </a>
                         </td>
                         </tr>
                     {% endfor %}
