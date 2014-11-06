@@ -160,6 +160,12 @@ $app['app.controllers.Article'] = $app->share(
     }
 );
 
+$app['app.controllers.ElectronicTest'] = $app->share(
+    function () use ($app) {
+        return new Controllers\ElectronicTestCtrl($app['app.GlobalCtrlDependencies']);
+    }
+);
+
 $app['app.controllers.Ajax'] = $app->share(
     function () use ($app) {
         return new Controllers\AjaxCtrl($app['app.GlobalCtrlDependencies']);
@@ -185,6 +191,12 @@ $app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POS
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');
 $app->match('/articles/create', 'app.controllers.Article:create')->method('GET|POST')->bind('article.create');
 $app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST')->bind('article.edit');
+
+// Electronic Test
+
+$app->get('/etest', 'app.controllers.ElectronicTest:index')->bind('etest.index');
+$app->match('/etest/create', 'app.controllers.ElectronicTest:create')->method('GET|POST')->bind('etest.create');
+//$app->match('/etest/{id}', 'app.controllers.ElectronicTest:edit')->method('GET|POST')->bind('etest.edit');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');

@@ -1,0 +1,24 @@
+<div class="box box-default">
+    <div class="box-body">
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name="etest[title]"
+                       placeholder="Course Title" value="{{ etest.title | default('') }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea class="form-control" name="etest[description]" rows="10"
+                          placeholder="Type course description here...">{{ etest.description | default('') }}</textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="box-footer">
+        <button class="btn btn-primary" type="submit">Add Course</button>
+        <a href="{{ app.url_generator.generate('admin.dashboard') }}" class="btn btn-default"
+           type="button">Cancel</a>
+    </div>
+</div>
