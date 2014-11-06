@@ -10,9 +10,9 @@
             <div class="col-md-4">
                 <select id="input-user-type" name="user[type]" class="form-control">
                     <option value="">Select User Type</option>
-                    <option value="admin" {% if user.type == 'admin' %}selected="selected"{% endif %}>Admin</option>
-                    <option value="staff" {% if user.type == 'staff' %}selected="selected"{% endif %}>Staff</option>
-                    <option value="student" {% if user.type == 'student' %}selected="selected"{% endif %}>Student
+                    <option value="admin" {% if user.type|default('') == 'admin' %}selected="selected"{% endif %}>Admin</option>
+                    <option value="staff" {% if user.type|default('') == 'staff' %}selected="selected"{% endif %}>Staff</option>
+                    <option value="student" {% if user.type|default('') == 'student' %}selected="selected"{% endif %}>Student
                     </option>
                 </select>
             </div>
@@ -39,8 +39,8 @@
             <div class="col-md-4">
                 <select name="user[gender]" class="form-control">
                     <option value="">Select Gender</option>
-                    <option value="M" {% if user.gender == 'M' %}selected="selected"{% endif %}>Male</option>
-                    <option value="F" {% if user.gender == 'F' %}selected="selected"{% endif %}>Female</option>
+                    <option value="M" {% if user.gender|default('') == 'M' %}selected="selected"{% endif %}>Male</option>
+                    <option value="F" {% if user.gender|default('') == 'F' %}selected="selected"{% endif %}>Female</option>
                 </select>
             </div>
         </div>
@@ -89,7 +89,7 @@
 
     </div>
     <div class="box-footer">
-        <button class="btn btn-primary" type="submit">{% if user %}Update{% else %}Create{% endif %} User</button>
+        <button class="btn btn-primary" type="submit">{% if user is defined %}Update{% else %}Create{% endif %} User</button>
         <a href="{{ app.url_generator.generate('admin.dashboard') }}" class="btn btn-default"
            type="button">Cancel</a>
     </div>

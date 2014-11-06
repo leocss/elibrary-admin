@@ -1,0 +1,34 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Manage E-test | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>Available Courses</h2>
+    </div>
+    <div class="container-fluid">
+        <div class="row main-content">
+            <div class="col-md-12">
+                {% include 'partials/errors.twig' with errors %}
+
+
+                <div class="container-fluid">
+                    <div class="col-md-8">
+                        {% for course in courses %}
+                            <div class="course-item panel">
+                                <h3>
+                                    <a href="{{ app.url_generator.generate('etest.index', {course_id: course.id}) }}">
+                                        {{ course.name }}
+                                    </a>
+                                </h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

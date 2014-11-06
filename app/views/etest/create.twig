@@ -1,12 +1,12 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Register User | {{ parent() }}
+    Create Course | {{ parent() }}
 {% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h2>Register User</h2>
+        <h2>Create Course</h2>
     </div>
 
     <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
@@ -14,11 +14,9 @@
             <div class="row main-content">
                 <div class="col-md-8">
                     {% include 'partials/errors.twig' with errors %}
-                    {% include 'user/form-main.twig' %}
+                    {% include 'etest/form-main.twig' %}
                 </div>
-                <div class="col-md-4">
-                    {% include 'user/form-side.twig' %}
-                </div>
+
             </div>
         </div>
     </form>
