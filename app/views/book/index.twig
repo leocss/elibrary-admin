@@ -1,0 +1,28 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Book Reserved | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h4>Manage book</h4>
+        {% for book in books %}
+            <div class="col-md-3">
+                <div class="col-md-6">
+                    {{ book.title }}
+                </div>
+                <div class="col-md-3">
+                    <a href="{{ app.url_generator.generate('book.manage', {'id' : book.id}) }}" class="btn btn-primary">
+                        Edit
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" id="book-{{ book.id }} delete" class="delete btn btn-danger">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -10,6 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BookCtrl extends BaseCtrl
 {
+    public function index()
+    {
+        $books = $this->client->getBooks();
+
+        return $this->view->render('book/index.twig', [
+            'books' => $books,
+        ]);
+    }
 
     public function add(Request $request)
     {
@@ -44,6 +52,15 @@ class BookCtrl extends BaseCtrl
         $books = $this->client->getBooks();
 
         return $this->view->render('book/manage.twig', [
+            'books' => $books,
+        ]);
+    }
+
+    public function reserved()
+    {
+        $books = $this->client->getBooks();
+
+        return $this->view->render('book/reserved.twig', [
             'books' => $books,
         ]);
     }

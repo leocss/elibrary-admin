@@ -1,12 +1,11 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Admin Upload | {{ parent() }}
+    Book Reserved | {{ parent() }}
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
-        <h4>Add book</h4>
-        {% include ('partials/add-book-form.twig') with {'categories' : categories } %}
+        <h4>Reserved book</h4>
     </div>
 {% endblock %}

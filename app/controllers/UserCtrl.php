@@ -86,4 +86,9 @@ class UserCtrl extends BaseCtrl
 
         return $this->view->render('user/edit.twig', $params);
     }
+
+    public function logout()
+    {
+
+    }
 }
