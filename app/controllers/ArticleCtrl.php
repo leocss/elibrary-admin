@@ -42,9 +42,9 @@ class ArticleCtrl extends BaseCtrl
 
             $article = $this->client->createPost($data);
 
-            if (($image = $request->files->get('featured_image')) && ($image instanceof UploadedFile)) {
+            if (($image = $request->files->get('image')) && ($image instanceof UploadedFile)) {
                 if ($image->isValid()) {
-                    $this->client->uploadPostFeaturedImage($id, $image);
+                    $this->client->uploadPostFeaturedImage($article['id'], $image);
                 }
             }
 
