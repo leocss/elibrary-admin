@@ -3,22 +3,29 @@
 
         <div class="form-group">
             <div class="col-sm-12">
-                <input type="text" class="form-control" name="etest[title]"
-                       placeholder="Course Title" value="{{ etest.title | default('') }}">
+                <input type="text" class="form-control" name="course[name]"
+                       placeholder="Course Title" value="{{ course.name | default('') }}">
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-sm-12">
-                <textarea class="form-control" name="etest[description]" rows="10"
-                          placeholder="Type course description here...">{{ etest.description | default('') }}</textarea>
+                <textarea class="form-control" name="course[description]" rows="10"
+                          placeholder="Enter course description here...">{{ course.description | default('') }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" name="course[time_length]" rows="10"
+                       placeholder="Time length (in minutes)..." value="{{ course.time_length | default(0) }}"/>
             </div>
         </div>
 
     </div>
     <div class="box-footer">
-        <button class="btn btn-primary" type="submit">Add Course</button>
-        <a href="{{ app.url_generator.generate('admin.dashboard') }}" class="btn btn-default"
+        <button class="btn btn-primary" type="submit">{% if course is defined %}Update{% else %}Add{% endif %} Course</button>
+        <a href="{{ app.url_generator.generate('etest.index') }}" class="btn btn-default"
            type="button">Cancel</a>
     </div>
 </div>

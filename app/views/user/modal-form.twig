@@ -1,0 +1,30 @@
+<div class="modal fade pay-bill-modal" id="pay-bill-modal-{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" class="form-horizontal">
+          <div class="form-group">
+            <label class="control-label col-md-4">Amount</label>
+
+            <div class="col-md-8">
+              <input type="text" class="form-control pay-bill-input">
+              <span class="input-group-btn">
+                  <button class="btn btn-default" id="btn-generate-password" type="button">
+                    &#8358
+                  </button>
+              </span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-pay-bill">Pay</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

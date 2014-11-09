@@ -1,7 +1,7 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Manage Users | {{ parent() }}
+  Manage Users | {{ parent() }}
 {% endblock %}
 
 {% block content %}
@@ -15,35 +15,43 @@
                     <div class="user-list">
                         <div class="row">
                             {% for user in users %}
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="user-item clearfix">
-                                        <img src="{{ user.image_url | default(app.default_user_image) }}"
-                                             alt="User Image"
-                                             class="img-circle pull-left">
-                                        <h4 class="user-content text-right">
-                                            <a class="text-inverse"
-                                               href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}">
-                                                <strong>{{ user.full_name }}</strong>
-                                            </a> <br>
-                                    <span class="btn-group action-btns">
-                                        <a href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}"
-                                           class="btn btn-default" title="">
+                              <div class="col-sm-6 col-lg-4">
+                                <div class="user-item clearfix">
+                                  <img src="{{ user.image_url | default(app.default_user_image) }}"
+                                       alt="User Image"
+                                       class="img-circle pull-left">
+                                  <h4 class="user-content text-right">
+                                    <a class="text-inverse"
+                                       href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}">
+                                      <strong>{{ user.full_name }}</strong>
+                                    </a> <br>
+                                      <span class="btn-group action-btns">
+                                        {% if user.debt > 0 %}
+                                          <a href="javascript:void(0)" id="user-{{ user.id }}"
+                                             class="btn btn-default" data-toggle="modal" data-target="#pay-bill-modal-{{ user.id }}">
+                                            Pay Bill
+                                          </a>
+                                        {% else %}
+                                          <div class="btn btn-default">Bill cleared</div>
+                                        {% endif %}
+                                          <a href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}"
+                                             class="btn btn-default" title="">
                                             Edit
-                                        </a>
-                                        <a href="javascript:void(0)" id="user-{{ user.id }}"
-                                           class="btn btn-danger delete-user">
+                                          </a>
+                                          <a href="javascript:void(0)" id="user-{{ user.id }}"
+                                             class="btn btn-danger delete-user">
                                             <span class="fa fa-times"></span>
-                                        </a>
-                                    </span>
-                                        </h4>
-                                    </div>
+                                          </a>
+                                      </span>
+                                  </h4>
                                 </div>
+                              </div>
+                              {% include 'user/modal-form.twig' with user %}
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-
             {#
             <div class="box box-default media user-item">
                 <a class="pull-left padding-md text-center text-white" href="#">

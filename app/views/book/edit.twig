@@ -1,12 +1,12 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Admin Upload | {{ parent() }}
+    Edit Book | {{ parent() }}
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <h4>Edit book</h4>
-        {% include ('partials/edit-book-form.twig') with {'book' : book } %}
+        {% include ('book/form-main.twig') with {'categories' : categories, 'book' : book } %}
     </div>
 {% endblock %}

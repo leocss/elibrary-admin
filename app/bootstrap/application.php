@@ -111,6 +111,7 @@ $app->before(
         $app['default_article_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
         $app['default_book_image'] = $app['base_url'] . 'assets/img/sample-book-preview.png';
         $app['default_user_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
+        $app['default_etest_course_image'] = $app['base_url'] . 'assets/img/user/default-user-image.png';
     },
     Silex\Application::EARLY_EVENT
 );
@@ -186,7 +187,7 @@ $app->match('/users/{id}', 'app.controllers.User:edit')->method('GET|POST')->bin
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
 $app->match('/books/manage', 'app.controllers.Book:manage')->method('GET|POST')->bind('book.manage');
-$app->match('/books/view/{id}', 'app.controllers.Book:view')->method('GET|POST')->bind('book.view');
+$app->match('/books/{id}', 'app.controllers.Book:edit')->method('GET|POST')->bind('book.edit');
 $app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POST')->bind('book.reserved');
 
 // Articles
@@ -197,11 +198,15 @@ $app->match('/articles/{id}', 'app.controllers.Article:edit')->method('GET|POST'
 // Electronic Test
 
 $app->get('/etest', 'app.controllers.ElectronicTest:index')->bind('etest.index');
-$app->match('/etest/create', 'app.controllers.ElectronicTest:create')->method('GET|POST')->bind('etest.create');
+$app->match('/etest/create-course', 'app.controllers.ElectronicTest:createCourse')->method('GET|POST')->bind('etest.create-course');
+$app->match('/etest/view-course/{course_id}', 'app.controllers.ElectronicTest:viewCourse')->method('GET|POST')->bind('etest.view-course');
+$app->match('/etest/course-questions/{course_id}', 'app.controllers.ElectronicTest:courseQuestions')->method('GET|POST')->bind('etest.course-questions');
 //$app->match('/etest/{id}', 'app.controllers.ElectronicTest:edit')->method('GET|POST')->bind('etest.edit');
 
 // Ajax Routes
 $app->delete('/ajax/users/{id}', 'app.controllers.Ajax:deleteUser');
+$app->delete('/ajax/users/{id}/debt', 'app.controllers.Ajax:resolveDebt');
 $app->delete('/ajax/articles/{id}', 'app.controllers.Ajax:deleteArticle');
+$app->delete('/ajax/etest/courses/{id}', 'app.controllers.Ajax:deleteEtestCourse');
 
 return $app;

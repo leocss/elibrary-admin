@@ -1,0 +1,104 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+  Manage Questions for {{ course.name }} | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h2>
+      Manage Questions ({{ course.name }})
+    </h2>
+  </div>
+  <div class="container-fluid">
+    <div class="row main-content">
+      <div class="col-md-8">
+        {% for question in course.questions %}
+          <div class="panel">
+            <div class="panel-body clearfix">
+              {{ loop.index }}. {{ question.question }}
+
+              <button id="delete-question-{{ question.id }}" class="delete-question pull-right">
+                <span class="fa fa-times text-danger"></span>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <form action="" method="post">
+          <div class="box box-default">
+            <div class="box-header">
+              <h3>Add New Question</h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <input class="form-control" placeholder="Question..." type="text"
+                               name="question[question]"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <select class="form-control" name="question[type]">
+                          <option value="">Select Option Type</option>
+                          {% for type in ['multiple_choice', 'true_or_false'] %}
+                            <option value="{{ type }}">{{ type }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4>Options</h4>
+
+                  <div id="question-options" class="form-group">
+                    <div class="row">
+                      <div id="question-options-true-or-false">
+                        {% for i in ['True', 'False'] %}
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Text for {{ i }}..."/>
+
+                              <span class="input-group-addon">
+                                <input type="radio" name="question[answer]"
+                                       value="{% if i == 'True' %}1{% else %}0{% endif %}"/>
+                              </span>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                      <div id="question-options-multiple-choice">
+                        {% for i in [1, 2, 3, 4] %}
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Text for option {{ i }}..."/>
+
+                              <span class="input-group-addon">
+                                <input type="radio" name="question[answer]"/>
+                              </span>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary btn-block">
+                Add Question
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

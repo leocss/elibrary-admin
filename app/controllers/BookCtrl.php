@@ -65,13 +65,15 @@ class BookCtrl extends BaseCtrl
         ]);
     }
 
-    public function view($id)
+    public function edit($id)
     {
         $book = $this->client->getBook($id);
+        $categories = $this->client->getCategories();
 
-        return $this->view->render('book/view.twig',
+        return $this->view->render('book/edit.twig',
             [
                 'book' => $book,
+                'categories' => $categories,
             ]);
     }
 }

@@ -1,33 +1,70 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Manage E-test | {{ parent() }}
+    Manage E.Test Courses | {{ parent() }}
 {% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h2>Available Courses</h2>
+        <h2>Manage Etest Courses</h2>
     </div>
     <div class="container-fluid">
         <div class="row main-content">
             <div class="col-md-12">
                 {% include 'partials/errors.twig' with errors %}
-
-
-                <div class="container-fluid">
-                    <div class="col-md-8">
-                        {% for course in courses %}
-                            <div class="course-item panel">
-                                <h3>
-                                    <a href="{{ app.url_generator.generate('etest.index', {course_id: course.id}) }}">
-                                        {{ course.name }}
-                                    </a>
-                                </h3>
+                <table class="table table-striped table-bordered media-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 125px">Image</th>
+                        <th style="width: 60%">Title / Description</th>
+                        <th style="width: 20%">Created</th>
+                        <th style="width: 10%" class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
+                        <td>
+                            <div class="thumbnail">
+                                <div class="thumbnail-view">
+                                    <img alt="Course Image"
+                                         src="{{ course.image_url | default(app.default_etest_course_image) }}"
+                                         class="img-responsive" width="125">
+                                </div>
                             </div>
-                        {% endfor %}
-                    </div>
+                        </td>
+                        <td>
+                            <a href="{{ app.url_generator.generate('etest.view-course', {course_id: course.id}) }}">
+                                <strong>{{ course.name }}</strong>
+                            </a>
 
-
+                            <p>{{ course.description }}</p>
+                        </td>
+                        <td>
+                            <strong>Created At</strong> <br/>
+                            {{ course.created_at }} <br/><br/>
+                            <strong>Updated At</strong> <br/>
+                            {{ course.updated_at }}<br/>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-xs btn-primary"
+                               href="{{ app.url_generator.generate('etest.view-course', {course_id: course.id}) }}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            &nbsp;
+                            <button id="delete-course-{{ course.id }}"
+                                    class="btn btn-xs btn-danger delete-article">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <br/>
+                            <a class="btn btn-xs btn-secondary"
+                               href="{{ app.url_generator.generate('etest.course-questions', {course_id: course.id}) }}">
+                                Manage Questions
+                            </a>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

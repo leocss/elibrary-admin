@@ -1,0 +1,33 @@
+{% extends 'layout-sidebar.twig' %}
+
+{% block title %}
+    Edit Course | {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h2>
+            Edit Course /
+            <small>
+                <a class="btn btn-xs btn-secondary"
+                   href="{{ app.url_generator.generate('etest.course-questions', {course_id: course.id}) }}">
+                    Manage Questions
+                </a>
+            </small>
+        </h2>
+    </div>
+
+    <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
+        <div class="container-fluid">
+            <div class="row main-content">
+                <div class="col-md-8">
+                    {% include 'partials/errors.twig' with errors %}
+                    {% include 'etest/form-main.twig' with course %}
+                </div>
+                <div class="col-md-4">
+                    {% include 'etest/form-side.twig' %}
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

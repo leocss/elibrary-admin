@@ -7,6 +7,6 @@
 {% block content %}
     <div class="container-fluid">
         <h4>Add book</h4>
-        {% include ('partials/add-book-form.twig') with {'categories' : categories } %}
+        {% include ('book/form-main.twig') with {'categories' : categories } %}
     </div>
 {% endblock %}

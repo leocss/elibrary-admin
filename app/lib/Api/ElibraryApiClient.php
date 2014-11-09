@@ -238,6 +238,34 @@ class ElibraryApiClient extends Client
     }
 
     /**
+     * @param $uid
+     * @param $amount
+     * @return ResponseInterface
+     */
+    public function payBill($uid, $data, $params = [])
+    {
+        $request = $this->buildRequest('DELETE', sprintf('/users/%s/debt', $uid),
+            array_merge($params, [
+                'body' => $data
+            ])
+        );
+        return $this->send(
+            $request
+        );
+    }
+
+    public function logTransaction($uid, $data, $params = [])
+    {
+        return $this->send(
+          $this->buildRequest('POST', sprintf('/users/%s/transactions', $uid),
+            array_merge($params, [
+              'body' => $data
+            ])
+          )
+        );
+    }
+
+    /**
      * @param int $bookId
      * @return array
      */
@@ -264,6 +292,28 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('POST', '/etest/courses', array_merge($params, [
             'body' => $data
         ])));
+    }
+
+    /**
+     * @param $courseId
+     * @param $data
+     * @param $params
+     * @return ResponseInterface
+     */
+    public function updateEtestCourse($courseId, $data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/etest/courses/%s', $courseId), array_merge($params, [
+            'body' => $data
+        ])));
+    }
+
+    /**
+     * @param $courseId
+     * @return ResponseInterface
+     */
+    public function deleteEtestCourse($courseId)
+    {
+        return $this->send($this->buildRequest('DELETE', sprintf('/etest/courses/%s', $courseId)));
     }
 
     /**
@@ -302,6 +352,15 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', '/etest/courses', $params));
     }
 
+    /**
+     * @param $id
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function getEtestCourse($id, $params = [])
+    {
+        return $this->send($this->buildRequest('GET', sprintf('/etest/courses/%s', $id), $params));
+    }
 
     /**
      * @param $sessionId

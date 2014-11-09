@@ -1,28 +1,76 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Book Reserved | {{ parent() }}
+    Manage Books | {{ parent() }}
 {% endblock %}
 
 {% block content %}
+    <div class="page-header">
+        <h2>Manage Books</h2>
+    </div>
     <div class="container-fluid">
-        <h4>Manage book</h4>
-        {% for book in books %}
-            <div class="col-md-3">
-                <div class="col-md-6">
-                    {{ book.title }}
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ app.url_generator.generate('book.manage', {'id' : book.id}) }}" class="btn btn-primary">
-                        Edit
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#" id="book-{{ book.id }} delete" class="delete btn btn-danger">
-                        Delete
-                    </a>
-                </div>
+        <div class="row main-content">
+            <div class="col-md-12">
+                {% include 'partials/errors.twig' with errors %}
+
+                <table class="table table-striped table-bordered media-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 125px">Image</th>
+                        <th style="width: 60%">Title / Description</th>
+                        <th style="width: 20%">Date</th>
+                        <th style="width: 10%" class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in books %}
+                        <tr class="article-item">
+                            <td>
+                                <div class="thumbnail">
+                                    <div class="thumbnail-view">
+                                        <a href="#"
+                                           class="thumbnail-view-hover image-zoom"></a>
+                                        <img alt="Featured Image"
+                                             src="{{ book.image_url | default(app.default_article_image) }}"
+                                             class="img-responsive" width="125">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ app.url_generator.generate('book.edit', {id: book.id}) }}">
+                                    <strong>{{ book.title }}</strong>
+                                </a>
+
+                                <p>{{ book.overview }}</p>
+                            </td>
+                            <td>
+                                <strong>Created At</strong> <br/>
+                                {{ book.created_at | date('d-m-Y')}} <br/><br/>
+                                <strong>Updated At</strong> <br/>
+                                {{ book.updated_at| date('d-m-Y') }}<br/>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-xs btn-primary"
+                                   href="{{ app.url_generator.generate('book.edit', {id: book.id}) }}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                &nbsp;
+                                <button id="delete-article-{{ book.id }}"
+                                        class="btn btn-xs btn-danger delete-book">
+                                    <i class="fa fa-times"></i>
+                                </button>&nbsp;<br />
+                                <button id="delete-article-{{ book.id }}"
+                                        class="btn btn-xs btn-primary">
+                                    <i class="fa fa-book">Register hard copy</i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
