@@ -322,7 +322,7 @@ class ElibraryApiClient extends Client
      * @param $params
      * @return ResponseInterface
      */
-    public function createEtestQuestion($courseId, $data, $params)
+    public function createEtestQuestion($courseId, $data, $params = [])
     {
         return $this->send(
             $this->buildRequest('POST', sprintf('/etest/courses/%s/questions', $courseId),
