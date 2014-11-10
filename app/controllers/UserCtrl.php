@@ -23,8 +23,6 @@ class UserCtrl extends BaseCtrl
         $params = [];
         if ($request->isMethod('post')) {
             $data = $request->request->get('user');
-            print_r($data);
-            exit;
 
             try {
                 $response = $this->client->createUser($data);
