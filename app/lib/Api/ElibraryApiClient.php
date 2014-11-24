@@ -110,6 +110,7 @@ class ElibraryApiClient extends Client
     {
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
+
     public function addBook($data, $document)
     {
         $request = $this->buildRequest('POST', '/books');
@@ -119,12 +120,28 @@ class ElibraryApiClient extends Client
         $request->getBody()->setField('author', $data['author']);
         $request->getBody()->setField('edition', $data['edition']);
         $request->getBody()->setField('overview', $data['overview']);
-        $request->getBody()->setField('file_name', $data['file']['name']);
-        $request->getBody()->setField('has_soft_copy', $data['has_soft_copy']);
-        $request->getBody()->setField('has_hard_copy', $data['has_hard_copy']);
-        $request->getBody()->setField('created_at', date('Y-m-d H:i:s', time()));
-        $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
+
+        return $this->send($request);
+    }
+
+    public function uploadBookImage($id, $document)
+    {
+        $user = $this->getSessionUser();
+
+        $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
+        $request->getBody()->setField('name', $document->getClientOriginalName());
         $request->getBody()->addFile(new PostFile('image', fopen($document->getRealPath(), 'r')));
+
+        return $this->send($request);
+    }
+
+    public function uploadBookFile($id, $document)
+    {
+        $user = $this->getSessionUser();
+
+        $request = $this->buildRequest('POST', sprintf('/books/%s/book', $id));
+        $request->getBody()->setField('name', $document->getClientOriginalName());
+        $request->getBody()->addFile(new PostFile('book', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);
     }
@@ -134,6 +151,7 @@ class ElibraryApiClient extends Client
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
     }
+
     /**
      * @param $id
      * @param $data
