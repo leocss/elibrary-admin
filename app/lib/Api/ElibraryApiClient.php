@@ -138,8 +138,6 @@ class ElibraryApiClient extends Client
 
     public function uploadBookFile($id, $document)
     {
-        $user = $this->getSessionUser();
-
         $request = $this->buildRequest('POST', sprintf('/books/%s/book', $id));
         $request->getBody()->setField('file_name', $document->getClientOriginalName());
         $request->getBody()->addFile(new PostFile('book', fopen($document->getRealPath(), 'r')));
