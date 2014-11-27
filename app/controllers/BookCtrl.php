@@ -37,7 +37,6 @@ class BookCtrl extends BaseCtrl
                 }
 
                 $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
-                exit(var_dump($response));
 
                 return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
             }
