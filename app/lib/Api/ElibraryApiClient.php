@@ -122,7 +122,6 @@ class ElibraryApiClient extends Client
         $request->getBody()->setField('edition', $data['edition']);
         $request->getBody()->setField('published_at', $data['published_at']);
         $request->getBody()->setField('overview', $data['overview']);
-        $request->getBody()->setField('file_name', $data['file']['name']);
 
         return $this->send($request);
     }
