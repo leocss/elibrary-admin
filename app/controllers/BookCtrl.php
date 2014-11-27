@@ -66,10 +66,22 @@ class BookCtrl extends BaseCtrl
         ]);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $book = $this->client->getBook($id);
         $categories = $this->client->getCategories();
+
+        if ($request->isMethod('post')) {
+            $post = $request->request->get('user');
+
+            try {
+                if ($this->client->updateBook($id, $post)) {
+                    return $this->app->redirect($this->app['url_generator']->generate('book.edit', ['id' => $id]));
+                }
+            } catch (ApiException $e) {
+                $params['errors'][] = $e->getMessage();
+            }
+        }
 
         return $this->view->render('book/edit.twig',
             [
