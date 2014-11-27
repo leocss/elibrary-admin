@@ -153,6 +153,13 @@ class ElibraryApiClient extends Client
         return $this->send($request);
     }
 
+    public function updateBook($id, $data)
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/books/%s', $id), [
+            'body' => $data
+        ]));
+    }
+
     /**
      * @param $id
      * @param $data
