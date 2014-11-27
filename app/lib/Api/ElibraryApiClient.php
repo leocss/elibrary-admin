@@ -82,6 +82,7 @@ class ElibraryApiClient extends Client
     {
 
     }
+
     public function createUser($data)
     {
         return $this->send(
@@ -111,7 +112,7 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
 
-    public function addBook($data, $document)
+    public function addBook($data)
     {
         $request = $this->buildRequest('POST', '/books');
         $request->getBody()->setField('category_id', $data['category']);
@@ -126,29 +127,29 @@ class ElibraryApiClient extends Client
         return $this->send($request);
     }
 
-    /*public function uploadBookImage($id, $document)
+    /**
+     * @param $id
+     * @param UploadedFile $document
+     * @return ResponseInterface
+     */
+    public function uploadBookImage($id, $document)
     {
-        $user = $this->getSessionUser();
-
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);
-    }*/
-
-    public function uploadBookFile($id, $document)
-    {
-        $request = $this->buildRequest('POST', sprintf('/books/%s/book', $id));
-        $request->getBody()->setField('file_name', $document->getClientOriginalName());
-        $request->getBody()->addFile(new PostFile('book', fopen($document->getRealPath(), 'r')));
-
-        return $this->send($request);
     }
 
-    public function uploadPreviewImage($id, $file)
+    /**
+     * @param $id
+     * @param UploadedFile $document
+     * @return ResponseInterface
+     */
+    public function uploadBookFile($id, UploadedFile $document)
     {
-        $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
-        $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
+        $request = $this->buildRequest('POST', sprintf('/books/%s/book', $id));
+        $request->getBody()->setField('name', $document->getClientOriginalName());
+        $request->getBody()->addFile(new PostFile('book', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);
     }
@@ -268,10 +269,12 @@ class ElibraryApiClient extends Client
                 'body' => $data
             ])
         );
+
         return $this->send(
             $request
         );
     }
+
     /*
      *
      */
@@ -279,11 +282,11 @@ class ElibraryApiClient extends Client
     public function logTransaction($uid, $data, $params = [])
     {
         return $this->send(
-          $this->buildRequest('POST', sprintf('/users/%s/transactions', $uid),
-            array_merge($params, [
-              'body' => $data
-            ])
-          )
+            $this->buildRequest('POST', sprintf('/users/%s/transactions', $uid),
+                array_merge($params, [
+                    'body' => $data
+                ])
+            )
         );
     }
 
@@ -295,6 +298,7 @@ class ElibraryApiClient extends Client
     {
 
     }
+
     /**
      * @param int $bookId
      * @return array

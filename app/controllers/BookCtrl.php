@@ -21,32 +21,31 @@ class BookCtrl extends BaseCtrl
 
     public function add(Request $request)
     {
-        if($request->isMethod('post')){
-
-            $input = array_merge($request->request->all(), $_FILES);
-
-            $file_name = $input['image']['name'];
-            $file_size = $input['image']['size'];
-            $file_tmp_name = $input['image']['tmp_name'];
-            $explode = explode('.', $file_name);
-            $ext = end($explode);;
-
-            if($res = $this->client->addBook($input, $request->files->get('image'))){
-                if($this->client->uploadBookFile($res['id'], $request->files->get('book'))) {
-                    if ($this->client->uploadPreviewImage($res['id'], $request->files->get('image'))) {
-                        $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
-                        return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
-                    }
-                }
-            }
-
-        }
         $categories = $this->client->getCategories();
 
-        return $this->view->render('book/add.twig',
-            [
-                'categories' => $categories
-            ]);
+        if ($request->isMethod('post')) {
+
+            $input = $request->request->all();
+
+            if ($response = $this->client->addBook($input)) {
+                if ($request->files->has('book') && $request->files->get('book') != null) {
+                    $this->client->uploadBookFile($response['id'], $request->files->get('book'));
+                }
+
+                if ($request->files->has('image') && $request->files->get('image') != null) {
+                    $this->client->uploadBookImage($response['id'], $request->files->get('image'));
+                }
+
+                $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
+                exit(var_dump($response));
+
+                return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+            }
+        }
+
+        return $this->view->render('book/add.twig', [
+            'categories' => $categories
+        ]);
     }
 
     public function manage()
