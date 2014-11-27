@@ -1,11 +1,20 @@
 {% extends 'layout-sidebar.twig' %}
 
 {% block title %}
-    Book Reserved | {{ parent() }}
+  Book Reserved | {{ parent() }}
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <h4>Reserved book</h4>
-    </div>
+  <div class="container-fluid">
+    <h4>Reserved book</h4>
+    {% for book in books %}
+      <div class="list-group">
+        <ul>
+          <li class="list-group-item">User: {{ book.user.full_name }}</li>
+          <li class="list-group-item">Borrowed on: {{ book.expire_at | date('d-m-Y') }}</li>
+          <li class="list-group-item">Expired on: {{ book.created_at | date('d-m-Y') }}</li>
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

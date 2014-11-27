@@ -110,20 +110,23 @@ class ElibraryApiClient extends Client
     {
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
+
+    /*
+     *
+     */
     public function addBook($data, $document)
     {
+        var_dump($data);exit;
         $request = $this->buildRequest('POST', '/books');
         $request->getBody()->setField('category_id', $data['category']);
         $request->getBody()->setField('title', $data['title']);
         $request->getBody()->setField('rfid', $data['rfid']);
+        $request->getBody()->setField('copies', $data['copies']);
         $request->getBody()->setField('author', $data['author']);
         $request->getBody()->setField('edition', $data['edition']);
+        $request->getBody()->setField('published_at', $data['published_at']);
         $request->getBody()->setField('overview', $data['overview']);
         $request->getBody()->setField('file_name', $data['file']['name']);
-        $request->getBody()->setField('has_soft_copy', $data['has_soft_copy']);
-        $request->getBody()->setField('has_hard_copy', $data['has_hard_copy']);
-        $request->getBody()->setField('created_at', date('Y-m-d H:i:s', time()));
-        $request->getBody()->setField('updated_at', date('Y-m-d H:i:s', time()));
         $request->getBody()->addFile(new PostFile('image', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);
@@ -253,6 +256,9 @@ class ElibraryApiClient extends Client
             $request
         );
     }
+    /*
+     *
+     */
 
     public function logTransaction($uid, $data, $params = [])
     {
@@ -265,6 +271,14 @@ class ElibraryApiClient extends Client
         );
     }
 
+    /*
+     *
+     */
+
+    public function logTransactions()
+    {
+
+    }
     /**
      * @param int $bookId
      * @return array
@@ -280,6 +294,11 @@ class ElibraryApiClient extends Client
     public function getRandomBook()
     {
         return $this->prepareBook($this->send($this->buildRequest('GET', '/books/random')));
+    }
+
+    public function getReservedBooks()
+    {
+        return $this->send($this->buildRequest('GET', '/books/reserved', ['query' => ['include' => 'book,user']]));
     }
 
     /**

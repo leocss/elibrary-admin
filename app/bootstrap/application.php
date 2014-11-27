@@ -187,8 +187,8 @@ $app->match('/users/{id}', 'app.controllers.User:edit')->method('GET|POST')->bin
 $app->match('/books', 'app.controllers.Book:index')->method('GET|POST')->bind('book.index');
 $app->match('/books/add', 'app.controllers.Book:add')->method('GET|POST')->bind('book.add');
 $app->match('/books/manage', 'app.controllers.Book:manage')->method('GET|POST')->bind('book.manage');
-$app->match('/books/{id}', 'app.controllers.Book:edit')->method('GET|POST')->bind('book.edit');
 $app->match('/books/reserved', 'app.controllers.Book:reserved')->method('GET|POST')->bind('book.reserved');
+$app->match('/books/{id}', 'app.controllers.Book:edit')->method('GET|POST')->bind('book.edit');
 
 // Articles
 $app->get('/articles', 'app.controllers.Article:index')->bind('article.index');

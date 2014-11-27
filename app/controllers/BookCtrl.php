@@ -58,7 +58,7 @@ class BookCtrl extends BaseCtrl
 
     public function reserved()
     {
-        $books = $this->client->getBooks();
+        $books = $this->client->getReservedBooks();
 
         return $this->view->render('book/reserved.twig', [
             'books' => $books,

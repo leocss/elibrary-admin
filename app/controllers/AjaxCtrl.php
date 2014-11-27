@@ -43,13 +43,14 @@ class AjaxCtrl extends BaseCtrl
 
     public function resolveDebt(Request $request, $id)
     {
+        $transactionId = uniqid();
         $this->client->logTransaction($id, [
-            'transaction_id' => uniqid(15),
+            'transaction_id' => $transactionId,
             'amount' => $request->request->get('amount'),
             'type' => 'cashout',
-            'description' => 'Debt',
-            'status' => 'OK',
-            'message' => 'Debt Payment'
+            'description' => 'Debt Payment',
+            'status' => 'success',
+            'message' => 'OK'
         ]);
 
         $response = $this->client->payBill($id, ['amount' => $request->request->get('amount')]);

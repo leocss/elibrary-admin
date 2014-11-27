@@ -50,12 +50,21 @@ class UserCtrl extends BaseCtrl
             $params['query']['filter'] = $request->query->get('filter');
         }
 
+        $usersBill = $this->client->getUsers();
+
+        foreach($usersBill as $users){
+            $debt[] = $users['debt'];
+        }
+
+        $totalDebt = array_sum($debt);
+
         $users = $this->client->getUsers($params);
 
         return $this->view->render(
             'user/index.twig',
             [
-                'users' => $users
+                'users' => $users,
+                'totalDebt' => $totalDebt
             ]
         );
     }

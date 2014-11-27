@@ -7,7 +7,7 @@
 {% block content %}
     <div id="user-index">
         <div class="page-header">
-            <h2>Manage Library Users</h2>
+            <h2>Manage Library Users<small>total amount of debt - &#8358 {{ totalDebt }}</small></h2>
         </div>
         <div class="container-fluid">
             <div class="row main-content">
@@ -24,7 +24,8 @@
                                     <a class="text-inverse"
                                        href="{{ app.url_generator.generate('user.edit', {id: user.id}) }}">
                                       <strong>{{ user.full_name }}</strong>
-                                    </a> <br>
+
+                                    </a><br><small>debt  - &#8358 {{ user.debt }}</small><br>
                                       <span class="btn-group action-btns">
                                         {% if user.debt > 0 %}
                                           <a href="javascript:void(0)" id="user-{{ user.id }}"
