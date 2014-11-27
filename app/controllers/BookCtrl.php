@@ -32,9 +32,11 @@ class BookCtrl extends BaseCtrl
             $ext = end($explode);;
 
             if($res = $this->client->addBook($input, $request->files->get('image'))){
-                if($this->client->uploadPreviewImage($res['id'], $request->files->get('image'))){
-                    $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
-                    return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+                if($this->client->uploadBookFile($res['id'], $request->files->get('book'))) {
+                    if ($this->client->uploadPreviewImage($res['id'], $request->files->get('image'))) {
+                        $this->app['session']->getFlashBag()->add('message', 'Successfully Uploaded');
+                        return $this->app->redirect($this->app['url_generator']->generate('admin.dashboard'));
+                    }
                 }
             }
 

@@ -111,23 +111,39 @@ class ElibraryApiClient extends Client
         return $this->send($this->buildRequest('GET', sprintf('/users/%s', $id)));
     }
 
-    /*
-     *
-     */
     public function addBook($data, $document)
     {
-        var_dump($data);exit;
         $request = $this->buildRequest('POST', '/books');
         $request->getBody()->setField('category_id', $data['category']);
         $request->getBody()->setField('title', $data['title']);
         $request->getBody()->setField('rfid', $data['rfid']);
-        $request->getBody()->setField('copies', $data['copies']);
+        //$request->getBody()->setField('copies', $data['copies']);
         $request->getBody()->setField('author', $data['author']);
         $request->getBody()->setField('edition', $data['edition']);
         $request->getBody()->setField('published_at', $data['published_at']);
         $request->getBody()->setField('overview', $data['overview']);
         $request->getBody()->setField('file_name', $data['file']['name']);
+
+        return $this->send($request);
+    }
+
+    /*public function uploadBookImage($id, $document)
+    {
+        $user = $this->getSessionUser();
+
+        $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($document->getRealPath(), 'r')));
+
+        return $this->send($request);
+    }*/
+
+    public function uploadBookFile($id, $document)
+    {
+        $user = $this->getSessionUser();
+
+        $request = $this->buildRequest('POST', sprintf('/books/%s/book', $id));
+        $request->getBody()->setField('file_name', $document->getClientOriginalName());
+        $request->getBody()->addFile(new PostFile('book', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);
     }
@@ -136,7 +152,10 @@ class ElibraryApiClient extends Client
     {
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
         $request->getBody()->addFile(new PostFile('image', fopen($file->getRealPath(), 'r')));
+
+        return $this->send($request);
     }
+
     /**
      * @param $id
      * @param $data
