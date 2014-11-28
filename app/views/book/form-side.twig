@@ -1,0 +1,43 @@
+    <div class="box box-default box no-rounded">
+      <div class="box-header no-rounded">
+        <h3>
+          <span class="fa fa-key"></span>
+          Book RFID
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <input type="text" class="form-control" id="file" value="{{ book.title|default('') }}" name="rfid">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="box box-default no-rounded">
+      <div class="box-header no-rounded">
+        <h3>
+          <span class="fa fa-plus"></span>
+          Book Soft Copy
+        </h3>
+      </div>
+      <div class="box-body">
+        <div class="form-group">
+          <input type="file" class="form-control" id="file" name="book">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="box box-default no-rounded">
+      <div class="box-header no-rounded">
+        <h3>
+          <span class="fa fa-plus"></span>
+          Book Preview Image
+        </h3>
+      </div>
+      <div class="box-body">
+        <div class="form-group">
+          <input type="file" class="form-control" id="image-file" name="image">
+        </div>
+      </div>
+    </div>

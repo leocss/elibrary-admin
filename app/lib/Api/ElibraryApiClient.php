@@ -135,6 +135,7 @@ class ElibraryApiClient extends Client
     public function uploadBookImage($id, $document)
     {
         $request = $this->buildRequest('POST', sprintf('/books/%s/image', $id));
+        $request->getBody()->setField('name', $document->getClientOriginalName());
         $request->getBody()->addFile(new PostFile('image', fopen($document->getRealPath(), 'r')));
 
         return $this->send($request);

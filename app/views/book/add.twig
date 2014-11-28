@@ -5,8 +5,22 @@
 {% endblock %}
 
 {% block content %}
+  <div class="page-header">
+    <h2>Add book</h2>
+  </div>
+
+  <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
     <div class="container-fluid">
-        <h4>Add book</h4>
-        {% include ('book/form-main.twig') with {'categories' : categories } %}
+      <div class="row main-content">
+        <div class="col-md-8">
+          {% include 'partials/errors.twig' with errors %}
+          {% include 'book/form-main.twig' with {'categories' : categories } %}
+        </div>
+        <div class="col-md-4">
+          {% include 'book/form-side.twig' %}
+        </div>
+      </div>
     </div>
+  </form>
+
 {% endblock %}
