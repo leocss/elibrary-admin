@@ -22,6 +22,14 @@
       </div>
       <div class="box-body">
         <div class="form-group">
+          {% if book.book_file_url %}
+          <p>
+            <b>Previous: </b>
+            <a href="{{ book.book_file_url }}">
+              {{ book.file_name }}
+            </a>
+          </p>
+          {% endif %}
           <input type="file" class="form-control" id="file" name="book">
         </div>
       </div>
