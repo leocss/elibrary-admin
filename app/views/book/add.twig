@@ -17,7 +17,7 @@
           {% include 'book/form-main.twig' with {'categories' : categories } %}
         </div>
         <div class="col-md-4">
-          {% include 'book/form-side.twig' %}
+          {% include 'book/form-side.twig' with {'book' : book} %}
         </div>
       </div>
     </div>

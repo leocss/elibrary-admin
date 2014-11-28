@@ -7,7 +7,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <input type="text" class="form-control" id="file" value="{{ book.title|default('') }}" name="rfid">
+          <input type="text" class="form-control" id="file" value="{{ book.rfid | default('') }}" name="rfid">
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="box-body">
         <div class="form-group">
-          {% if book.book_file_url %}
+          {% if book.book_file_url | default(null) %}
           <p>
             <b>Previous: </b>
             <a href="{{ book.book_file_url }}">

@@ -43,7 +43,8 @@ class BookCtrl extends BaseCtrl
         }
 
         return $this->view->render('book/add.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'book' => []
         ]);
     }
 
@@ -75,6 +76,15 @@ class BookCtrl extends BaseCtrl
 
             try {
                 if ($this->client->updateBook($id, $post)) {
+
+                    if ($request->files->has('book') && $request->files->get('book') != null) {
+                        $this->client->uploadBookFile($id, $request->files->get('book'));
+                    }
+
+                    if ($request->files->has('image') && $request->files->get('image') != null) {
+                        $this->client->uploadBookImage($id, $request->files->get('image'));
+                    }
+
                     return $this->app->redirect($this->app['url_generator']->generate('book.edit', ['id' => $id]));
                 }
             } catch (ApiException $e) {

@@ -129,6 +129,17 @@ class ElibraryApiClient extends Client
 
     /**
      * @param $id
+     * @param $data
+     * @param array $params
+     * @return ResponseInterface
+     */
+    public function updateBook($id, $data, $params = [])
+    {
+        return $this->send($this->buildRequest('POST', sprintf('/books/%s', $id), $params));
+    }
+
+    /**
+     * @param $id
      * @param UploadedFile $document
      * @return ResponseInterface
      */
