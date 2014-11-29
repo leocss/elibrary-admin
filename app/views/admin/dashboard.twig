@@ -119,7 +119,7 @@
                                             <tr>
                                                 <td>{{ user.id }}</td>
                                                 <td>
-                                                    <img class="img-responsive" src="{{ user.photo_url | default(app.default_user_image) }}"/>
+                                                    <img width="140" class="img-responsive" src="{{ user.photo_url | default(app.default_user_image) }}"/>
                                                 </td>
                                                 <td>{{ user.full_name }}</td>
                                                 <td>{{ user.type }}</td>
